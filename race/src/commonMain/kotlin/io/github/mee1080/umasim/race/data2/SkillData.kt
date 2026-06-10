@@ -3,7 +3,7 @@ package io.github.mee1080.umasim.race.data2
 import io.github.mee1080.umasim.race.calc2.RaceState
 import io.github.mee1080.umasim.race.data.*
 import io.github.mee1080.utility.fetchFromUrl
-import io.github.mee1080.utility.normalizedLevenshteinDistance
+import io.github.mee1080.utility.searchDistanceTo
 import io.github.mee1080.utility.toPercentString
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
@@ -16,7 +16,7 @@ private val jsonParser = Json { allowTrailingComma = true }
 
 suspend fun loadSkillData() {
     val skillDataString =
-        fetchFromUrl("https://raw.githubusercontent.com/mee1080/umasim/refs/heads/main/data/skill_data.txt")
+        fetchFromUrl("https://cdn.jsdelivr.net/gh/isrror/cdn@latest/umasim/data/skill_data.txt")
     skillData2 = jsonParser.decodeFromString<List<SkillData>>(skillDataString)
 }
 
@@ -40,10 +40,10 @@ fun getSkill(name: String): SkillData {
 private const val CANDIDATE_THRESHOLD = 0.3
 
 fun findSkills(input: String): List<SkillData>? {
-    val matched = skillDataMap2[input]
-    if (matched != null) return matched
-    val candidate = skillDataMap2.keys.minBy { normalizedLevenshteinDistance(it, input) }
-    val distance = normalizedLevenshteinDistance(candidate, input)
+    if (input.isBlank()) return null
+    skillDataMap2[input]?.let { return it }
+    val candidate = skillDataMap2.keys.minByOrNull { it.searchDistanceTo(input) } ?: return null
+    val distance = candidate.searchDistanceTo(input)
     return if (distance > CANDIDATE_THRESHOLD) null else skillDataMap2[candidate]
 }
 
@@ -87,9 +87,9 @@ class ApproximateStartContinue(
 
     override val description = buildString {
         append(start.toPercentString(1))
-        append("の確率で開始、")
+        append(" 的概率开始，")
         append(continuation.toPercentString(1))
-        append("の確率で継続")
+        append(" 的概率继续")
     }
 }
 
@@ -111,11 +111,11 @@ class ApproximateRandomRates(
     override val description = buildString {
         rates.forEach {
             append(it.second.toPercentString(1))
-            append("の確率で")
+            append(" 的概率变为")
             append(it.first)
             append("、")
         }
-        append("残りは0")
+        append("其余为 0")
     }
 }
 
@@ -130,7 +130,7 @@ class ApproximateCountUp(
 
     override val description = buildString {
         append(rate.toPercentString(1))
-        append("の確率で+1")
+        append(" 的概率 +1")
     }
 }
 
@@ -139,123 +139,123 @@ class ApproximateNone(
     override val valueOnStart: Int = 0,
 ) : ApproximateCondition {
     override fun update(state: RaceState, value: Int) = value
-    override val description = "なし"
+    override val description = "无"
 }
 
 val approximateConditions = mapOf(
-    "move_lane" to ApproximateStartContinue("横移動(軽やかステップなど)", 0.1, 0.1),
+    "move_lane" to ApproximateStartContinue("横向移动（轻快步伐等）", 0.1, 0.1),
     "change_order_onetime" to ApproximateRandomRates(
-        "追い抜き/追い抜かれ(アガッてきたなど多数)",
+        "超车/被超车（振作起来等多种技能）",
         listOf(-1 to 0.2, 1 to 0.2)
     ),
     "overtake" to ApproximateMultiCondition(
-        "追い抜きモード(電光石火など多数、レーン移動にも影響)",
+        "超车模式（电光石火等多种技能，也影响跑线移动）",
         listOf(
-            ApproximateStartContinue("逃げ", 0.05, 0.50) to {
+            ApproximateStartContinue("逃跑", 0.05, 0.50) to {
                 it.setting.basicRunningStyle == Style.NIGE
             },
             ApproximateStartContinue("先行", 0.15, 0.55) to {
                 it.setting.basicRunningStyle == Style.SEN
             },
-            ApproximateStartContinue("その他", 0.20, 0.60) to null,
+            ApproximateStartContinue("其他", 0.20, 0.60) to null,
         )
     ),
     "overtaken" to ApproximateMultiCondition(
-        "詰め寄られ(勝利への執念など)",
+        "被逼近（胜利的执念等）",
         listOf(
-            ApproximateStartContinue("逃げ/先行", 0.30, 0.70) to {
+            ApproximateStartContinue("逃跑/先行", 0.30, 0.70) to {
                 val basicRunningStyle = it.setting.basicRunningStyle
                 basicRunningStyle == Style.NIGE || basicRunningStyle == Style.SEN
             },
-            ApproximateStartContinue("差し/追込", 0.15, 0.50) to null,
+            ApproximateStartContinue("差/追", 0.15, 0.50) to null,
         ),
     ),
-    "blocked_front" to ApproximateStartContinue("前方ブロック(鋼の意志など)", 0.07, 0.50),
+    "blocked_front" to ApproximateStartContinue("前方阻挡（钢之意志等）", 0.07, 0.50),
     "blocked_side" to ApproximateMultiCondition(
-        "横ブロック(つぼみなど)",
+        "横向阻挡（花蕾等）",
         listOf(
-            ApproximateStartContinue("序盤1/4以降かつ走行レーンが外側", 0.0, 0.0) to {
+            ApproximateStartContinue("前 1/4 之后且跑线在外侧", 0.0, 0.0) to {
                 it.currentSection in 1..3 && it.simulation.currentLane > 3.0 * horseLane
             },
-            ApproximateStartContinue("上記以外の序盤", 0.1, 0.85) to {
+            ApproximateStartContinue("除上述以外的前期", 0.1, 0.85) to {
                 it.currentPhase <= 0
             },
-            ApproximateStartContinue("中盤", 0.08, 0.75) to {
+            ApproximateStartContinue("中期", 0.08, 0.75) to {
                 it.currentPhase == 1
             },
-            ApproximateStartContinue("終盤", 0.07, 0.50) to null,
+            ApproximateStartContinue("后期", 0.07, 0.50) to null,
         ),
         valueOnStart = 1,
     ),
     "infront_near_lane" to ApproximateMultiCondition(
-        "前にウマ娘(ノンストなど)",
+        "前方有赛马娘（Non-stop 等）",
         listOf(
-            ApproximateStartContinue("序盤", 0.05, 0.50) to {
+            ApproximateStartContinue("前期", 0.05, 0.50) to {
                 it.currentPhase <= 0
             },
-            ApproximateStartContinue("中盤", 0.10, 0.50) to {
+            ApproximateStartContinue("中期", 0.10, 0.50) to {
                 it.currentPhase == 1
             },
-            ApproximateStartContinue("終盤最終コーナー前", 0.20, 0.30) to {
+            ApproximateStartContinue("后期最终弯前", 0.20, 0.30) to {
                 !it.isAfterFinalCorner
             },
-            ApproximateStartContinue("終盤最終コーナー後", 0.07, 0.40) to null,
+            ApproximateStartContinue("后期最终弯后", 0.07, 0.40) to null,
         ),
     ),
-    "behind_near_lane" to ApproximateStartContinue("後にウマ娘(お先など)", 0.15, 0.50),
-    "behind_near_lane_time_set1" to ApproximateStartContinue("少し抜け出ていると(ヴォードヴィル)", 0.20, 0.60),
+    "behind_near_lane" to ApproximateStartContinue("后方有赛马娘（お先等）", 0.15, 0.50),
+    "behind_near_lane_time_set1" to ApproximateStartContinue("稍微拉开时（ヴォードヴィル）", 0.20, 0.60),
     "near_count" to ApproximateMultiCondition(
-        "近くのウマ娘人数(ウマ好み/ワクワククライマックスなど)",
+        "附近赛马娘人数（多种相关技能）",
         listOf(
-            ApproximateRandomRates("序盤", listOf(1 to 0.1, 2 to 0.2, 3 to 0.3, 4 to 0.2, 5 to 0.1)) to {
+            ApproximateRandomRates("前期", listOf(1 to 0.1, 2 to 0.2, 3 to 0.3, 4 to 0.2, 5 to 0.1)) to {
                 it.currentPhase <= 0
             },
-            ApproximateRandomRates("中盤", listOf(1 to 0.3, 2 to 0.2, 3 to 0.1)) to {
+            ApproximateRandomRates("中期", listOf(1 to 0.3, 2 to 0.2, 3 to 0.1)) to {
                 it.currentPhase == 1
             },
-            ApproximateRandomRates("終盤", listOf(1 to 0.3, 2 to 0.3, 3 to 0.2)) to null,
+            ApproximateRandomRates("后期", listOf(1 to 0.3, 2 to 0.3, 3 to 0.2)) to null,
         ),
     ),
-    "near_infront_count" to ApproximateRandomRates("前方近くのウマ娘人数(無二/無三)", listOf(1 to 0.05)),
-    "is_surrounded" to ApproximateStartContinue("周囲にウマ娘(どこ吹く風など)", 0.05, 0.40),
+    "near_infront_count" to ApproximateRandomRates("前方附近的赛马娘人数", listOf(1 to 0.05)),
+    "is_surrounded" to ApproximateStartContinue("周围有赛马娘（どこ吹く風等）", 0.05, 0.40),
     "temptation_opponent_count_behind" to ApproximateStartContinue(
-        "後ろのウマ娘掛かり(トリック&トリートなど、自身への効果のみ反映)",
+        "后方赛马娘焦躁（Trick & Treat 等，仅反映自身效果）",
         0.07, 0.20,
     ),
     "is_other_character_activate_advantage_skill22" to ApproximateMultiCondition(
-        "他のウマ娘が速度スキル発動(後の先など)",
+        "其他赛马娘发动速度技能（后发制人等）",
         listOf(
-            ApproximateRandomRates("序盤", listOf(1 to 0.1)) to {
+            ApproximateRandomRates("前期", listOf(1 to 0.1)) to {
                 it.currentPhase <= 0
             },
-            ApproximateRandomRates("中盤", listOf(1 to 0.15)) to {
+            ApproximateRandomRates("中期", listOf(1 to 0.15)) to {
                 it.currentPhase == 1
             },
-            ApproximateRandomRates("終盤", listOf(1 to 0.2)) to null,
+            ApproximateRandomRates("后期", listOf(1 to 0.2)) to null,
         )
     ),
     "is_other_character_activate_advantage_skill31" to ApproximateMultiCondition(
-        "他のウマ娘が加速スキル発動(トランセンド固有)",
+        "其他赛马娘发动加速技能（トランセンド固有）",
         listOf(
-            ApproximateRandomRates("序盤", listOf(1 to 0.9)) to {
+            ApproximateRandomRates("前期", listOf(1 to 0.9)) to {
                 it.currentPhase <= 0
             },
-            ApproximateRandomRates("中盤前半", listOf(1 to 0.01)) to {
+            ApproximateRandomRates("中期前半", listOf(1 to 0.01)) to {
                 it.simulation.position in it.setting.phase1Start..it.setting.phase1Half
             },
-            ApproximateRandomRates("中盤後半", listOf(1 to 0.05)) to {
+            ApproximateRandomRates("中期后半", listOf(1 to 0.05)) to {
                 it.currentPhase == 1
             },
-            ApproximateRandomRates("終盤", listOf(1 to 0.9)) to null,
+            ApproximateRandomRates("后期", listOf(1 to 0.9)) to null,
         )
     ),
     "change_order_up_middle" to ApproximateMultiCondition(
-        "中盤追い抜き(クラウン固有/嫁アマ固有など)",
+        "中期超车（クラウン固有 / 嫁アマ固有等）",
         listOf(
-            ApproximateCountUp("中盤", 0.05) to {
+            ApproximateCountUp("中期", 0.05) to {
                 it.currentPhase == 1
             },
-            ApproximateNone("その他") to null,
+            ApproximateNone("其他") to null,
         )
     ),
     "change_order_up_end_after" to ApproximateMultiCondition(

@@ -20,9 +20,9 @@ import io.github.mee1080.umasim.store.operation.*
 fun CourseInput(state: AppState, dispatch: OperationDispatcher<AppState>) {
     val track = state.setting.track
     HideBlock(
-        header = { Text("コース") },
+        header = { Text("赛道") },
         initialOpen = true,
-        headerClosed = { Text("コース：${state.setting.locationName} ${state.setting.trackDetail.name} ${track.condition.label}") },
+        headerClosed = { Text("赛道：${state.setting.locationName} ${state.setting.trackDetail.name} ${track.condition.label}") },
     ) {
         CourseSetting(track, dispatch)
     }
@@ -59,8 +59,8 @@ private fun CourseSetting(track: Track, dispatch: OperationDispatcher<AppState>)
                 locationList, track.location,
                 onSelect = { dispatch(setLocation(it)) },
                 modifier = Modifier.width(192.dp),
-                label = { Text("レース場") },
-                itemToString = { trackData[it]?.name ?: "不明" },
+                label = { Text("赛场") },
+                itemToString = { trackData[it]?.name ?: "未知" },
             )
             val courseMap = trackData[track.location]?.courses
             if (courseMap != null) {
@@ -68,22 +68,22 @@ private fun CourseSetting(track: Track, dispatch: OperationDispatcher<AppState>)
                     courseKeyList[track.location]!!, track.course,
                     onSelect = { dispatch(setCourse(it)) },
                     modifier = Modifier.width(256.dp),
-                    label = { Text("コース") },
-                    itemToString = { courseMap[it]?.name ?: "不明" },
+                    label = { Text("赛道") },
+                    itemToString = { courseMap[it]?.name ?: "未知" },
                 )
             }
             SelectBox(
                 CourseCondition.entries, track.condition,
                 onSelect = { dispatch(setCourseCondition(it)) },
                 modifier = Modifier.width(128.dp),
-                label = { Text("バ場状態") },
+                label = { Text("场地状态") },
                 itemToString = { it.label },
             )
             SelectBox(
                 gateCountSelection, track.gateCount,
                 onSelect = { dispatch(setGateCount(it)) },
                 modifier = Modifier.width(128.dp),
-                label = { Text("出走人数") },
+                label = { Text("参赛人数") },
             )
         }
     }

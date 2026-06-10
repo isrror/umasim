@@ -306,23 +306,23 @@ internal fun toGraphData(
                 ) { it.positionKeepState == PositionKeepState.PACE_DOWN }
                 if (displaySetting.downSlopeMode) add(
                     setting, frameList, index, raceFrame,
-                    "下り坂モード"
+                    "下坡模式"
                 ) { it.downSlopeMode }
                 if (displaySetting.leadCompetition) add(
                     setting, frameList, index, raceFrame,
-                    "位置取り争い"
+                    "取位争夺"
                 ) { it.leadCompetition }
                 if (displaySetting.competeFight) add(
                     setting, frameList, index, raceFrame,
-                    "追い比べ"
+                    "追比"
                 ) { it.competeFight }
                 if (displaySetting.conservePower) add(
                     setting, frameList, index, raceFrame,
-                    "脚色十分"
+                    "脚力十分"
                 ) { it.conservePower }
                 if (displaySetting.positionCompetition) add(
                     setting, frameList, index, raceFrame,
-                    "位置取り調整"
+                    "取位调整"
                 ) { it.positionCompetition }
                 if (displaySetting.staminaKeep) add(
                     setting, frameList, index, raceFrame,
@@ -330,15 +330,15 @@ internal fun toGraphData(
                 ) { it.staminaKeep }
                 if (displaySetting.secureLead) add(
                     setting, frameList, index, raceFrame,
-                    "リード確保"
+                    "确保领先"
                 ) { it.secureLead }
                 if (displaySetting.staminaLimitBreak) add(
                     setting, frameList, index, raceFrame,
-                    "スタミナ勝負"
+                    "耐力对决"
                 ) { it.staminaLimitBreak }
                 if (displaySetting.fullSpurt) add(
                     setting, frameList, index, raceFrame,
-                    "全開スパート"
+                    "全力冲刺"
                 ) { it.fullSpurt }
                 if (displaySetting.debuff) {
                     raceFrame.triggeredDebuffs.forEach { debuff ->

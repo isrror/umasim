@@ -28,10 +28,10 @@ val efficiencyColors = listOf(
 @Composable
 fun ContributionOutput(state: AppState) {
     val results by derivedStateOf { state.contributionResults }
-    if (results.isEmpty()) return
     val names = listOf("") + results.map { it.name }
+    if (results.isEmpty()) return
     val tableData = listOf(
-        listOf("平均", "上振れ20%", "下振れ20%", "SP効率(秒/100SP、青:Lv1～赤:Lv5)", "備考")
+        listOf("平均", "上位20%", "下位20%", "SP效率(秒/100SP，蓝:Lv1～红:Lv5)", "备注")
     ) + results.map { entry ->
         if (entry.averageDiff.isNaN()) {
             listOf(
@@ -109,6 +109,6 @@ fun ContributionOutput(state: AppState) {
                 }
             }
         }
-        Text("※信頼できるデータ出すにはシミュレーション回数10000回ぐらいは必要です。特に斜行セットとか。")
+        Text("※要拿到比较可靠的数据，模拟次数大概需要 10000 次以上。尤其是斜行套组之类。")
     }
 }

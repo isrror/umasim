@@ -20,7 +20,7 @@ import io.github.mee1080.umasim.store.operation.*
 @Composable
 fun SettingInput(state: AppState, dispatch: OperationDispatcher<AppState>) {
     HideBlock(
-        header = { Text("その他設定") },
+        header = { Text("其他设置") },
         initialOpen = true,
     ) {
         OtherSetting(state, dispatch)
@@ -40,27 +40,27 @@ private fun OtherSetting(state: AppState, dispatch: OperationDispatcher<AppState
             IntTextField(
                 value = state.simulationCount,
                 modifier = Modifier.width(128.dp),
-                label = { Text("回数") },
+                label = { Text("次数") },
                 onValueChange = { dispatch(setSimulationCount(it)) }
             )
             SelectBox(
                 SkillActivateAdjustment.entries, setting.skillActivateAdjustment,
                 onSelect = { dispatch(setSkillActivateAdjustment(it)) },
                 modifier = Modifier.width(256.dp),
-                label = { Text("スキル発動率修正") },
+                label = { Text("技能发动率修正") },
                 itemToString = { it.label },
             )
             SelectBox(
                 RandomPosition.entries, setting.randomPosition,
                 onSelect = { dispatch(setRandomPosition(it)) },
                 modifier = Modifier.width(256.dp),
-                label = { Text("ランダム区間") },
+                label = { Text("随机区间") },
                 itemToString = { it.label },
             )
         }
         Column {
             val intValue = (state.systemSetting.skillLaneChangeRate * 100).toInt()
-            Text("速度スキル発動時レーン移動率： $intValue %")
+            Text("速度技能发动时跑线移动率： $intValue %")
             Slider(
                 value = intValue.toFloat(),
                 onValueChange = { dispatch(setSkillLaneChangeRate(it / 100.0)) },

@@ -17,7 +17,7 @@ fun main(args: Array<String>) {
     application {
         Window(
             onCloseRequest = ::exitApplication,
-            title = "ウマ娘レースエミュレータ移植版",
+            title = "赛马娘赛事模拟器移植版",
             state = rememberWindowState(width = 900.dp, height = 900.dp)
         ) {
             App()

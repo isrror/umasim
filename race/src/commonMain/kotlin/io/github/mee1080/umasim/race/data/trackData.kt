@@ -45,7 +45,7 @@ suspend fun loadRecentEventTrackList() {
         if (data.size >= 4) {
             try {
                 val month = data[0].toInt()
-                val type = if (data[1] == "L") "リーグオブヒーローズ" else "チャンピオンズミーティング"
+                val type = if (data[1] == "L") "英雄联赛" else "冠军集会"
                 val label = "${month}月$type"
                 val courseName = data[2]
                 val distance = data[3]

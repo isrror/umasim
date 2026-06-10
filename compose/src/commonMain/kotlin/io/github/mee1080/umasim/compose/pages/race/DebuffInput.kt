@@ -19,13 +19,13 @@ import io.github.mee1080.umasim.store.operation.setDebuffCount
 fun DebuffInput(state: AppState, dispatch: OperationDispatcher<AppState>) {
     val debuffSetting = state.setting.debuffCounts
     HideBlock(
-        header = { Text("デバフ") },
+        header = { Text("减益") },
         initialOpen = false,
         headerClosed = {
             val summary = debuffSetting.filterValues { it > 0 }
                 .map { "${it.key.label}x${it.value}" }
                 .joinToString(", ")
-            Text("デバフ：$summary")
+            Text("减益：$summary")
         }
     ) {
         Column(

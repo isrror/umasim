@@ -2,7 +2,9 @@ package io.github.mee1080.utility
 
 
 fun normalizedLevenshteinDistance(s1: String, s2: String): Double {
-    return levenshteinDistance(s1, s2).toDouble() / maxOf(s1.length, s2.length)
+    val maxLength = maxOf(s1.length, s2.length)
+    if (maxLength == 0) return 0.0
+    return levenshteinDistance(s1, s2).toDouble() / maxLength
 }
 
 fun levenshteinDistance(s1: String, s2: String): Int {

@@ -67,10 +67,10 @@ fun App() {
                 onDismissRequest = { newVersion = null },
                 text = {
                     Column {
-                        Text("プログラムの更新があります。")
-                        Text("　現在のバージョン：${BuildKonfig.APP_VERSION}")
-                        Text("　最新のバージョン：$newVersion")
-                        Text("以下のURLからダウンロードしてください。")
+                        Text("程序有更新。")
+                        Text("　当前版本：${BuildKonfig.APP_VERSION}")
+                        Text("　最新版本：$newVersion")
+                        Text("请从以下 URL 下载。")
                         TextWithLink("https://github.com/mee1080/umasim/releases/latest")
                     }
                 },
@@ -80,7 +80,7 @@ fun App() {
                             newVersion = null
                         },
                     ) {
-                        Text("閉じる")
+                        Text("关闭")
                     }
                 },
             )

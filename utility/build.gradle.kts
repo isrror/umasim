@@ -41,6 +41,7 @@ kotlin {
 
         val jvmMain by getting {
             dependencies {
+                implementation("com.github.houbb:opencc4j:1.14.0")
 //                implementation(libs.ktor.clientCio)
             }
         }

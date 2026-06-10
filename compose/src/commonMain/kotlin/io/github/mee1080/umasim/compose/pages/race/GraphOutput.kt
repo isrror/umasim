@@ -40,11 +40,11 @@ fun GraphOutput(state: AppState, dispatch: OperationDispatcher<AppState>) {
 private val defaultLegends = listOf(
     "速度" to Color.Blue,
     "耐力" to Color(255, 128, 100),
-    "走行レーン" to Color.Green,
+    "跑线" to Color.Green,
 )
 
 private val virtualLegends = defaultLegends + listOf(
-    "先頭との差" to Color(0, 255, 255),
+    "与领先差距" to Color(0, 255, 255),
 )
 
 @OptIn(ExperimentalKoalaPlotApi::class, ExperimentalLayoutApi::class)
@@ -52,10 +52,10 @@ private val virtualLegends = defaultLegends + listOf(
 private fun GraphArea(state: AppState, graphData: GraphData, dispatch: OperationDispatcher<AppState>) {
     val frameList = graphData.frameList
     Column {
-        Text("直近レース詳細", style = MaterialTheme.typography.headlineSmall)
+        Text("最近比赛详情", style = MaterialTheme.typography.headlineSmall)
         var verticalZoom by remember { mutableStateOf(false) }
         LabeledCheckbox(verticalZoom, { verticalZoom = it }) {
-            Text("スキル数に応じて縦方向に拡大")
+            Text("根据技能数纵向放大")
         }
         val height by derivedStateOf { if (verticalZoom) max(520, graphData.skillData.size * 34) else 520 }
         ChartLayout(
@@ -130,12 +130,12 @@ private fun GraphArea(state: AppState, graphData: GraphData, dispatch: Operation
                 )
                 XYAnnotation(Point(0f, 0.05f), AnchorPoint.LeftMiddle) {
                     TooltipSurface(containerColor = Color(0, 0, 0, 128)) {
-                        Text("直線(青)/コーナー(紫)")
+                        Text("直线(蓝)/弯道(紫)")
                     }
                 }
                 XYAnnotation(Point(0f, 0.15f), AnchorPoint.LeftMiddle) {
                     TooltipSurface(containerColor = Color(0, 0, 0, 128)) {
-                        Text("上り坂(緑)/下り坂(黄)")
+                        Text("上坡(绿)/下坡(黄)")
                     }
                 }
                 if (graphData.skillData.isNotEmpty()) {
@@ -169,60 +169,60 @@ private fun GraphArea(state: AppState, graphData: GraphData, dispatch: Operation
             horizontalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             LabeledCheckbox(setting.skill, { dispatch(setGraphDisplaySetting(setting.copy(skill = it))) }) {
-                Text("スキル")
+                Text("技能")
             }
             LabeledCheckbox(setting.debuff, { dispatch(setGraphDisplaySetting(setting.copy(debuff = it))) }) {
-                Text("デバフ")
+                Text("减益")
             }
             LabeledCheckbox(setting.temptation, { dispatch(setGraphDisplaySetting(setting.copy(temptation = it))) }) {
-                Text("掛かり")
+                Text("焦躁")
             }
             LabeledCheckbox(setting.spurting, { dispatch(setGraphDisplaySetting(setting.copy(spurting = it))) }) {
-                Text("ラストスパート")
+                Text("最后冲刺")
             }
             LabeledCheckbox(
                 setting.paceDownMode,
                 { dispatch(setGraphDisplaySetting(setting.copy(paceDownMode = it))) }) {
-                Text("ペースダウンモード")
+                Text("减速模式")
             }
             LabeledCheckbox(
                 setting.downSlopeMode,
                 { dispatch(setGraphDisplaySetting(setting.copy(downSlopeMode = it))) }) {
-                Text("下り坂モード")
+                Text("下坡模式")
             }
             LabeledCheckbox(
                 setting.leadCompetition,
                 { dispatch(setGraphDisplaySetting(setting.copy(leadCompetition = it))) }) {
-                Text("位置取り争い")
+                Text("取位争夺")
             }
             LabeledCheckbox(
                 setting.competeFight,
                 { dispatch(setGraphDisplaySetting(setting.copy(competeFight = it))) }) {
-                Text("追い比べ")
+                Text("追比")
             }
             LabeledCheckbox(
                 setting.conservePower,
                 { dispatch(setGraphDisplaySetting(setting.copy(conservePower = it))) }) {
-                Text("脚色十分")
+                Text("脚力十足")
             }
             LabeledCheckbox(
                 setting.positionCompetition,
                 { dispatch(setGraphDisplaySetting(setting.copy(positionCompetition = it))) }) {
-                Text("位置取り調整")
+                Text("取位调整")
             }
             LabeledCheckbox(setting.staminaKeep, { dispatch(setGraphDisplaySetting(setting.copy(staminaKeep = it))) }) {
                 Text("持久力温存")
             }
             LabeledCheckbox(setting.secureLead, { dispatch(setGraphDisplaySetting(setting.copy(secureLead = it))) }) {
-                Text("リード確保")
+                Text("确保领先")
             }
             LabeledCheckbox(
                 setting.staminaLimitBreak,
                 { dispatch(setGraphDisplaySetting(setting.copy(staminaLimitBreak = it))) }) {
-                Text("スタミナ勝負")
+                Text("耐力对决")
             }
             LabeledCheckbox(setting.fullSpurt, { dispatch(setGraphDisplaySetting(setting.copy(fullSpurt = it))) }) {
-                Text("全開スパート")
+                Text("全力冲刺")
             }
         }
     }

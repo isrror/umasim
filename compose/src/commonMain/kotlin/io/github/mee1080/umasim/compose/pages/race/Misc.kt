@@ -11,7 +11,7 @@ import io.github.mee1080.umasim.compose.common.atoms.TextWithLink
 @Composable
 fun Header() {
     Row {
-        Text("ウマ娘レースエミュレータ移植版", style = MaterialTheme.typography.headlineMedium)
+        Text("赛马娘赛事模拟器移植版", style = MaterialTheme.typography.headlineMedium)
     }
 }
 
@@ -20,12 +20,12 @@ fun Footer() {
     HorizontalDivider()
 
     Column {
-        Row { Text("注意事項", style = MaterialTheme.typography.headlineSmall) }
+        Row { Text("注意事项", style = MaterialTheme.typography.headlineSmall) }
         """
-        あくまで目安。適当実装＆データの正確性が低いので参考までに。
-        他ウマ娘が絡む発動条件は、毎フレーム一定確率で発動するよう近似。スリスト遊びは2回発動が多すぎるので要修正。
-        順位条件その他色々無視。詳しくは該当スキルのツールチップに。
-        各種別情報は大いに参考させて頂きました。
+        这里只是参考值。实现比较粗糙，数据准确性也不高，请酌情参考。
+        与其他赛马娘相关的发动条件，近似成每帧按固定概率触发。某些双次触发技能过多，后续还要修。
+        名次条件和其他很多细节都被忽略了。具体请看对应技能的 tooltip。
+        各类资料都给了我很大的参考。
     """.trimIndent().split("\n").forEachIndexed { index, c ->
             Row { Text("${index + 1}: ${c.trim()}") }
         }
@@ -34,24 +34,24 @@ fun Footer() {
     HorizontalDivider()
 
     Column {
-        Row { Text("本プログラムについて", style = MaterialTheme.typography.headlineSmall) }
+        Row { Text("关于本程序", style = MaterialTheme.typography.headlineSmall) }
         TextWithLink(
             listOf(
-                "本プログラムは、砂井裏鍵さん（X: " to null,
+                "本程序由砂井裏鍵さん（X: " to null,
                 "@urakagi" to "https://twitter.com/urakagi",
-                "）作のレースエミュレータを、mee1080（X: " to null,
+                "）制作的赛事模拟器，由 mee1080（X: " to null,
                 "@mee10801" to "https://twitter.com/mee10801",
-                "）がKotlinに移植しました" to null,
+                "）移植到 Kotlin" to null,
             )
         )
-        TextWithLink("オリジナル版：http://race.wf-calc.net/")
+        TextWithLink("原版：http://race.wf-calc.net/")
     }
 
     HorizontalDivider()
 
     Column {
-        Row { Text("オープンソースライセンス", style = MaterialTheme.typography.headlineSmall) }
-        TextWithLink("画面表示には、「LINE Seed JP」フォント（https://seed.line.me/index_jp.html）を使用しています。")
+        Row { Text("开源许可", style = MaterialTheme.typography.headlineSmall) }
+        TextWithLink("界面显示使用了「LINE Seed JP」字体（https://seed.line.me/index_jp.html）。")
         Text("\"LINE Seed JP\" is licensed under the SIL Open Font License 1.1 (c) LY Corporation.")
     }
 }

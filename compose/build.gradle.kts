@@ -70,6 +70,9 @@ compose.desktop {
         nativeDistributions {
             packageName = "umasim"
             packageVersion = "2.0.0"
+            windows {
+                iconFile.set(project.file("src/jvmMain/composeResources/files/umasim.ico"))
+            }
         }
     }
 }

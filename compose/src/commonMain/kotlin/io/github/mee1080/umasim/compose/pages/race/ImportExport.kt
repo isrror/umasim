@@ -29,7 +29,7 @@ fun ImportExport(virtual: Boolean, state: AppState, dispatch: OperationDispatche
 private fun ImportDialog(virtual: Boolean, dispatch: OperationDispatcher<AppState>) {
     var open by remember { mutableStateOf(false) }
     MyButton({ open = true }) {
-        Text("インポート")
+        Text("导入")
     }
     if (open) {
         var input by remember { mutableStateOf("") }
@@ -38,8 +38,8 @@ private fun ImportDialog(virtual: Boolean, dispatch: OperationDispatcher<AppStat
             onDismissRequest = { open = false },
             text = {
                 Column {
-                    Text("※枠内にCtrl+Vなどでペーストし、インポートを押してください(Androidたぶん非対応)")
-                    Text("※フォーマットは適当なので、ChatGPT等にOCRさせて読み込むのも可能")
+                    Text("※请在框内用 Ctrl+V 等方式粘贴后，点导入（Android 可能不支持）")
+                    Text("※格式比较随意，也可以让 ChatGPT 之类先 OCR 再导入")
                     TextWithLink("　例： https://x.com/mee10801/status/1796811671304028542")
                     OutlinedTextField(
                         value = input,
@@ -50,21 +50,21 @@ private fun ImportDialog(virtual: Boolean, dispatch: OperationDispatcher<AppStat
                         onClick = { result = ImportExportConverter.importChara(input) },
                         modifier = Modifier.padding(vertical = 8.dp),
                     ) {
-                        Text("インポート")
+                        Text("导入")
                     }
                     result?.let {
-                        Text("キャラ：${it.charaName}")
-                        Text("ステータス：${it.speed}/${it.stamina}/${it.power}/${it.guts}/${it.wisdom}")
-                        Text("適性：バ場${it.surfaceFit}/距離${it.distanceFit}/脚質${it.styleFit}")
+                        Text("角色：${it.charaName}")
+                        Text("面板：${it.speed}/${it.stamina}/${it.power}/${it.guts}/${it.wisdom}")
+                        Text("适性：场地${it.surfaceFit}/距离${it.distanceFit}/跑法${it.styleFit}")
                         if (it.hasSkills.isNotEmpty()) {
-                            Text("スキル：")
+                            Text("技能：")
                             FlowRow(Modifier.padding(start = 16.dp)) {
                                 it.hasSkills.forEach { skill ->
                                     Text("${skill.name}, ")
                                 }
                             }
                         }
-                        Text("※インポートされるのは、ステータス、適性、スキルのみです")
+                        Text("※导入内容仅限面板、适性、技能")
                     }
                 }
             },
@@ -72,18 +72,18 @@ private fun ImportDialog(virtual: Boolean, dispatch: OperationDispatcher<AppStat
                 MyButton(
                     onClick = {
                         result?.let {
-                            dispatch(importChara(virtual, it))
+                    dispatch(importChara(virtual, it))
                         }
                         open = false
                     },
                     enabled = result != null,
                 ) {
-                    Text("反映")
+                    Text("应用")
                 }
             },
             dismissButton = {
                 MyButton({ open = false }) {
-                    Text("キャンセル")
+                    Text("取消")
                 }
             }
         )
@@ -94,7 +94,7 @@ private fun ImportDialog(virtual: Boolean, dispatch: OperationDispatcher<AppStat
 private fun ExportDialog(chara: UmaStatus) {
     var open by remember { mutableStateOf(false) }
     MyButton({ open = true }) {
-        Text("エクスポート")
+        Text("导出")
     }
     if (open) {
         var value by remember { mutableStateOf("") }
@@ -110,13 +110,13 @@ private fun ExportDialog(chara: UmaStatus) {
                         onValueChange = {},
                         readOnly = true,
                     )
-                    Text("※枠内をCtrl+Cなどでコピーしてください(Android非対応)")
-                    Text("※エクスポートされるのは、ステータス、適性、スキルのみです")
+                    Text("※请在框内用 Ctrl+C 等方式复制（Android 不支持）")
+                    Text("※导出内容仅限面板、适性、技能")
                 }
             },
             confirmButton = {
                 MyButton({ open = false }) {
-                    Text("閉じる")
+                    Text("关闭")
                 }
             },
         )

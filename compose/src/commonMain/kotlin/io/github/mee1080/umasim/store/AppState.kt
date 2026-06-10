@@ -38,9 +38,9 @@ fun AppState.saveSetting() {
 }
 
 enum class SimulationMode(val label: String) {
-    NORMAL("通常"),
-    CONTRIBUTION("スキル貢献度（各スキルを所持していない場合の増加タイム）"),
-    CONTRIBUTION2("スキル貢献度（選択スキルのうち1つを獲得した場合の短縮タイム）")
+    NORMAL("普通"),
+    CONTRIBUTION("技能贡献度（未持有各技能时的增加时间）"),
+    CONTRIBUTION2("技能贡献度（获得所选技能中的任意一个时的缩短时间）")
 }
 
 @Stable
@@ -220,30 +220,30 @@ data class GraphSkill(
             if (heal != null) {
                 val waste = effect.waste ?: 0.0
                 if (waste > 0.0) {
-                    appendLine("体力：${heal.roundToString(2)} (溢れ：${waste.roundToString(2)})")
+                    appendLine("耐力：${heal.roundToString(2)} (溢出：${waste.roundToString(2)})")
                 } else {
-                    appendLine("体力：${heal.roundToString(2)}")
+                    appendLine("耐力：${heal.roundToString(2)}")
                 }
             }
             val operating = effect.operating
             if (operating != null) {
                 if (operating.targetSpeed > 0.0) {
-                    appendLine("目標速度：${operating.targetSpeed.roundToString(2)}")
+                    appendLine("目标速度：${operating.targetSpeed.roundToString(2)}")
                 }
                 if (operating.speedWithDecel > 0.0) {
-                    appendLine("現在速度：${operating.speedWithDecel.roundToString(2)}")
+                    appendLine("当前速度：${operating.speedWithDecel.roundToString(2)}")
                 }
                 if (operating.currentSpeed > 0.0) {
-                    appendLine("現在速度：${operating.currentSpeed.roundToString(2)}")
+                    appendLine("当前速度：${operating.currentSpeed.roundToString(2)}")
                 }
                 if (operating.acceleration > 0.0) {
                     appendLine("加速度：${operating.acceleration.roundToString(2)}")
                 }
                 if (operating.laneChangeSpeed > 0.0) {
-                    appendLine("レーン移動速度：${operating.laneChangeSpeed.roundToString(2)}")
+                    appendLine("跑线移动速度：${operating.laneChangeSpeed.roundToString(2)}")
                 }
                 if (operating.duration > 0.0) {
-                    appendLine("持続時間：${operating.duration.roundToString(2)}")
+                    appendLine("持续时间：${operating.duration.roundToString(2)}")
                 }
             }
         }

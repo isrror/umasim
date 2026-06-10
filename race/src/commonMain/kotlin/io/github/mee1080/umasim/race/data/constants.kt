@@ -32,11 +32,11 @@ enum class Distance {
 }
 
 enum class Style(val value: Int, val text: String) {
-    NIGE(1, "逃げ"),
+    NIGE(1, "逃"),
     SEN(2, "先行"),
-    SASI(3, "差し"),
-    OI(4, "追込"),
-    OONIGE(1, "大逃げ"),
+    SASI(3, "差"),
+    OI(4, "追"),
+    OONIGE(1, "大逃"),
 }
 
 enum class Surface {
@@ -45,11 +45,11 @@ enum class Surface {
 }
 
 enum class Condition(val value: Int, val label: String) {
-    BEST(5, "絶好調"),
-    GOOD(4, "好調"),
+    BEST(5, "绝好调"),
+    GOOD(4, "好调"),
     NORMAL(3, "普通"),
-    BAD(2, "不調"),
-    WORST(1, "絶不調"),
+    BAD(2, "不调"),
+    WORST(1, "绝不调"),
 }
 
 enum class FitRank {
@@ -68,25 +68,25 @@ enum class CourseCondition(val value: Int, val label: String) {
 }
 
 enum class SkillActivateAdjustment(val value: Int, val label: String) {
-    NONE(0, "無"),
-    YES(1, "確定発動"),
-    ALL(2, "全乱数固定"),
+    NONE(0, "无"),
+    YES(1, "确定发动"),
+    ALL(2, "全随机固定"),
 }
 
 enum class RandomPosition(val value: Int, val label: String) {
-    RANDOM(0, "ランダム"),
-    FASTEST(1, "最速"),
+    RANDOM(0, "随机"),
+    FASTEST(1, "最快"),
     FAST(2, "1/4"),
-    MIDDLE(3, "中間"),
+    MIDDLE(3, "中间"),
     SLOW(4, "3/4"),
-    SLOWEST(5, "最遅"),
+    SLOWEST(5, "最迟"),
 }
 
 enum class PositionKeepMode(val label: String) {
     APPROXIMATE("近似"),
-    VIRTUAL("仮想ペースメーカー"),
-    SPEED_UP("一定確率でスピードアップ(逃げ)"),
-    NONE("無し"),
+    VIRTUAL("虚拟配速马"),
+    SPEED_UP("按概率提速(逃)"),
+    NONE("无"),
 }
 
 const val framePerSecond = 15
@@ -428,7 +428,7 @@ internal val secureLeadNigeBoost = mapOf(
 )
 
 /**
- * 脚質->リード確保体力消費補正倍率
+ * 脚質->リード確持久力温存消費補正倍率
  */
 internal val secureLeadStaminaCoef = mapOf(
     Style.OONIGE to 1.2,
@@ -439,7 +439,7 @@ internal val secureLeadStaminaCoef = mapOf(
 )
 
 /**
- * 距離->リード確保体力消費補正倍率
+ * 距離->リード確持久力温存消費補正倍率
  */
 internal fun secureLeadDistanceCoef(distance: Int) = when {
     distance < 1401 -> 0.3
@@ -484,12 +484,12 @@ val gateNumberToPostNumber = List(19) { gateNumber ->
 }
 
 enum class PositionKeepState(val label: String) {
-    NONE("なし"),
-    SPEED_UP("スピードアップ"),
-    OVERTAKE("追い越し"),
-    PACE_UP("ペースアップ"),
-    PACE_DOWN("ペースダウン"),
-    PACE_UP_EX("ペースアップEx"),
+    NONE("无"),
+    SPEED_UP("提速"),
+    OVERTAKE("超车"),
+    PACE_UP("加速"),
+    PACE_DOWN("减速"),
+    PACE_UP_EX("加速Ex"),
 }
 
 /**

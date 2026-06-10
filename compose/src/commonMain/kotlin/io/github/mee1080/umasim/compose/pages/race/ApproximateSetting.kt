@@ -30,30 +30,30 @@ fun ApproximateSetting(state: AppState, dispatch: OperationDispatcher<AppState>)
         val systemSetting = state.systemSetting
         Column {
             Text("近似条件", style = MaterialTheme.typography.headlineSmall)
-            Text("以下の項目は、シミュレーションが難しいため、近似処理を行っています")
-            Text("（いずれ変更できるようにしたい）", style = MaterialTheme.typography.bodySmall)
+            Text("以下项目因难以精确模拟，采用了近似处理")
+            Text("（之后希望能开放修改）", style = MaterialTheme.typography.bodySmall)
         }
 
         Column {
-            Text("全開スパート", style = MaterialTheme.typography.titleLarge)
-            Text("最高速度は不明のため、スピード2000を超えていれば無制限としています")
+            Text("全力冲刺", style = MaterialTheme.typography.titleLarge)
+            Text("由于最高速度未知，速度超过 2000 时按无限制处理")
         }
 
         Column {
-            Text("ポジションキープ", style = MaterialTheme.typography.titleLarge)
+            Text("位置保持", style = MaterialTheme.typography.titleLarge)
 
             SelectBox(
                 PositionKeepMode.entries, positionKeepMode,
                 onSelect = { dispatch(setPositionKeepMode(it)) },
                 modifier = Modifier.width(512.dp),
-                label = { Text("モード") },
+                label = { Text("模式") },
                 itemToString = { it.label },
             )
             when (positionKeepMode) {
                 PositionKeepMode.APPROXIMATE -> {
-                    Text("以下のセクションで、ペースダウンモードに入ります")
-                    Text("掛かり状態でも発動します（位置固定のため）")
-                    Text("逃げの各モード、およびペースアップモードは実装していません")
+                    Text("在以下区间进入减速模式")
+                    Text("即使处于焦躁状态也会触发（因为位置固定）")
+                    Text("逃跑跑法的各模式，以及加速模式，尚未实现")
                     Text(
                         "先行：${
                             systemSetting.positionKeepSectionSen.mapIndexed { index, value -> index to value }
@@ -62,14 +62,14 @@ fun ApproximateSetting(state: AppState, dispatch: OperationDispatcher<AppState>)
                         }"
                     )
                     Text(
-                        "差し：${
+                        "差：${
                             systemSetting.positionKeepSectionSasi.mapIndexed { index, value -> index to value }
                                 .filter { it.second }
                                 .joinToString { (it.first + 1).toString() }
                         }"
                     )
                     Text(
-                        "追込：${
+                        "追：${
                             systemSetting.positionKeepSectionOi.mapIndexed { index, value -> index to value }
                                 .filter { it.second }
                                 .joinToString { (it.first + 1).toString() }
@@ -80,10 +80,10 @@ fun ApproximateSetting(state: AppState, dispatch: OperationDispatcher<AppState>)
                 PositionKeepMode.VIRTUAL -> {
                     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                         Column {
-                            Text("以下のキャラとの差で判定します")
-                            Text("ただし、逃げ同士の競り合いは未実装です（仮想ペースメーカーは一定確率でスピードアップモードに入ります）")
+                            Text("按与以下角色的差距判定")
+                            Text("不过，逃跑之间的取位争夺尚未实现（虚拟配速马会按一定概率进入加速模式）")
                         }
-                        Text("仮想ペースメーカーのスピードアップモード確率: $positionKeepRate %")
+                        Text("虚拟配速马进入加速模式的概率: $positionKeepRate %")
                         Slider(
                             value = positionKeepRate.toFloat(),
                             onValueChange = { dispatch(setPositionKeepRate(it.toInt())) },
@@ -98,8 +98,8 @@ fun ApproximateSetting(state: AppState, dispatch: OperationDispatcher<AppState>)
                 }
 
                 PositionKeepMode.SPEED_UP -> {
-                    Text("一定確率でスピードアップモードに入ります（実際は設定値に加えて賢さ判定もあり）")
-                    Text("確率: $positionKeepRate %")
+                    Text("会以一定概率进入加速模式（实际还会叠加设置值与智力判定）")
+                    Text("概率: $positionKeepRate %")
                     Slider(
                         value = positionKeepRate.toFloat(),
                         onValueChange = { dispatch(setPositionKeepRate(it.toInt())) },
@@ -110,27 +110,27 @@ fun ApproximateSetting(state: AppState, dispatch: OperationDispatcher<AppState>)
                 }
 
                 PositionKeepMode.NONE -> {
-                    Text("ポジションキープ判定を行いません")
+                    Text("不进行位置保持判定")
                 }
             }
         }
 
         Column {
-            Text("走行レーン", style = MaterialTheme.typography.titleLarge)
-            Text("追い越しモード判定と横ブロックによる移動停止は近似処理を行っています（スキル発動の欄を参照）")
-            Text("追い越しモードの場合、内ラチから1人分空けた位置を走ります")
-            Text("目標速度または現在速度のスキルを発動した時に、速度スキル発動時レーン移動率の確率で、外に1人分移動します")
-            Text("外回りロスは全てのコーナーが90度として計算しています（いつか正確に計算したい）")
+            Text("跑线", style = MaterialTheme.typography.titleLarge)
+            Text("超车模式判定和横向阻挡造成的停移，均采用近似处理（见技能发动部分）")
+            Text("处于超车模式时，会在内栏外侧空出一个身位行进")
+            Text("当发动目标速度或当前速度类技能时，会按“速度技能发动时跑线移动率”的概率向外移动一个身位")
+            Text("外绕损耗按所有弯道均为 90 度来计算（以后想做更精确的计算）")
         }
 
         Column {
-            Text("位置取り争い", style = MaterialTheme.typography.titleLarge)
-            Text("逃げの場合に${systemSetting.leadCompetitionPosition}mの位置で固定発動します")
+            Text("取位争夺", style = MaterialTheme.typography.titleLarge)
+            Text("逃跑时会在${systemSetting.leadCompetitionPosition}m的位置固定触发")
         }
 
         Column {
-            Text("追い比べ", style = MaterialTheme.typography.titleLarge)
-            Text("最終直線で1秒毎に、${systemSetting.competeFightRate.toPercentString()}の確率で発動します")
+            Text("追比", style = MaterialTheme.typography.titleLarge)
+            Text("在最后直线上每秒按 ${systemSetting.competeFightRate.toPercentString()} 的概率触发")
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Slider(
                     value = (systemSetting.competeFightRate * 100).toFloat(),
@@ -141,26 +141,26 @@ fun ApproximateSetting(state: AppState, dispatch: OperationDispatcher<AppState>)
                 )
                 Button(
                     onClick = { dispatch(setCompeteFightRate(defaultCompeteFightRate)) },
-                ) { Text("リセット") }
+                ) { Text("重置") }
             }
         }
 
         Column {
-            Text("脚色十分", style = MaterialTheme.typography.titleLarge)
-            Text("持続時間は3秒×距離係数(0.45/1.0/0.875/0.8)で固定です")
-            Text("脚ためは実装していません（そもそも解析されてない認識）")
+            Text("脚力十足", style = MaterialTheme.typography.titleLarge)
+            Text("持续时间固定为 3 秒×距离系数（0.45/1.0/0.875/0.8）")
+            Text("脚力蓄积尚未实现（原本就没解析出来）")
         }
 
         Column {
             Text("持久力温存", style = MaterialTheme.typography.titleLarge)
-            Text("体力が足りていなければ、${systemSetting.staminaKeepRate.toPercentString()}の確率で発動します")
+            Text("如果体力不足，会按 ${systemSetting.staminaKeepRate.toPercentString()} 的概率触发")
         }
 
         Column {
-            Text("位置取り調整", style = MaterialTheme.typography.titleLarge)
-            Text("先頭からの距離判定と、近くにウマ娘がいるかどうかの判定は、常に成功扱いです")
-            Text("持久力温存でなければ、${systemSetting.positionCompetitionRate.toPercentString()}の確率で発動します")
-            Text("発動回数が実測した期待値通りになるのは、40%～60%程度です（スタミナ足りるか判定する場合は100%で）")
+            Text("取位调整", style = MaterialTheme.typography.titleLarge)
+            Text("与领头的距离判定，以及附近是否有赛马娘的判定，均按始终成功处理")
+            Text("若不是持久力温存，则按 ${systemSetting.positionCompetitionRate.toPercentString()} 的概率触发")
+            Text("触发次数与实测期望值一致的程度大约只有 40%～60%（在判定耐力是否足够时则按 100% 处理）")
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Slider(
                     value = (systemSetting.positionCompetitionRate * 100).toFloat(),
@@ -171,14 +171,14 @@ fun ApproximateSetting(state: AppState, dispatch: OperationDispatcher<AppState>)
                 )
                 Button(
                     onClick = { dispatch(setPositionCompetitionRate(defaultPositionCompetitionRate)) },
-                ) { Text("リセット") }
+                ) { Text("重置") }
             }
         }
 
         Column {
-            Text("リード確保", style = MaterialTheme.typography.titleLarge)
-            Text("追込以外で、${systemSetting.secureLeadRate.toPercentString()}の確率で発動します")
-            Text("自身の作戦が逃げ、ポジションキープモードが仮想ペースメーカー、かつ相手の作戦が自身と異なる場合、速度上昇量に倍率がかかります")
+            Text("确保领先", style = MaterialTheme.typography.titleLarge)
+            Text("除追跑外，会按 ${systemSetting.secureLeadRate.toPercentString()} 的概率触发")
+            Text("当自身跑法为逃跑、位置保持模式为虚拟配速马，且对手跑法与自身不同的时候，速度上升量会附加倍率")
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Slider(
                     value = (systemSetting.secureLeadRate * 100).toFloat(),
@@ -189,26 +189,26 @@ fun ApproximateSetting(state: AppState, dispatch: OperationDispatcher<AppState>)
                 )
                 Button(
                     onClick = { dispatch(setSecureLeadRate(defaultSecureLeadRate)) },
-                ) { Text("リセット") }
+                ) { Text("重置") }
             }
         }
 
         Column {
-            Text("スタミナ勝負", style = MaterialTheme.typography.titleLarge)
-            Text("ランダムで0.95～1.02の倍率がかかるようですが1.0倍固定です")
+            Text("耐力对决", style = MaterialTheme.typography.titleLarge)
+            Text("虽然随机倍率会落在 0.95～1.02 之间，但这里固定为 1.0 倍")
         }
 
         Column {
-            Text("スキル発動", style = MaterialTheme.typography.titleLarge)
-            Text("他のウマ娘が関わるスキル発動条件は、1秒ごとに、以下の判定を行っています")
+            Text("技能发动", style = MaterialTheme.typography.titleLarge)
+            Text("与其他赛马娘相关的技能发动条件，会每秒进行一次以下判定")
             Text(
-                "(適当に設定してるので実態とかけ離れてるとかの意見は歓迎です)",
+                "(这里是经验性设定，如果和实战差很多也欢迎提意见)",
                 style = MaterialTheme.typography.bodySmall
             )
-            approximateConditions.forEach { (key, condition) ->
+            approximateConditions.forEach { (_, condition) ->
                 Text(condition.displayName, modifier = Modifier.padding(top = 8.dp))
                 if (condition.valueOnStart > 0) {
-                    Text("スタート時は判定ON", modifier = Modifier.padding(start = 8.dp))
+                    Text("开局时判定开启", modifier = Modifier.padding(start = 8.dp))
                 }
                 if (condition is ApproximateMultiCondition) {
                     condition.conditions.forEach {

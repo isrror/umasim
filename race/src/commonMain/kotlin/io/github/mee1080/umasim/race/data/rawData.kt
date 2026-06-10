@@ -29,7 +29,7 @@ internal val rawCourseData = """
     "courses": {
       "10101": {
         "raceTrackId": 10001,
-        "name": "芝1200m",
+        "name": "草地1200m",
         "distance": 1200,
         "distanceType": 1,
         "surface": 1,
@@ -64,7 +64,7 @@ internal val rawCourseData = """
       },
       "10102": {
         "raceTrackId": 10001,
-        "name": "芝1500m",
+        "name": "草地1500m",
         "distance": 1500,
         "distanceType": 2,
         "surface": 1,
@@ -103,7 +103,7 @@ internal val rawCourseData = """
       },
       "10103": {
         "raceTrackId": 10001,
-        "name": "芝1800m",
+        "name": "草地1800m",
         "distance": 1800,
         "distanceType": 2,
         "surface": 1,
@@ -150,7 +150,7 @@ internal val rawCourseData = """
       },
       "10104": {
         "raceTrackId": 10001,
-        "name": "芝2000m",
+        "name": "草地2000m",
         "distance": 2000,
         "distanceType": 3,
         "surface": 1,
@@ -199,7 +199,7 @@ internal val rawCourseData = """
       },
       "10105": {
         "raceTrackId": 10001,
-        "name": "芝2600m",
+        "name": "草地2600m",
         "distance": 2600,
         "distanceType": 4,
         "surface": 1,
@@ -260,7 +260,7 @@ internal val rawCourseData = """
       },
       "10106": {
         "raceTrackId": 10001,
-        "name": "ダート1000m",
+        "name": "沙地1000m",
         "distance": 1000,
         "distanceType": 1,
         "surface": 2,
@@ -295,7 +295,7 @@ internal val rawCourseData = """
       },
       "10107": {
         "raceTrackId": 10001,
-        "name": "ダート1700m",
+        "name": "沙地1700m",
         "distance": 1700,
         "distanceType": 2,
         "surface": 2,
@@ -344,7 +344,7 @@ internal val rawCourseData = """
       },
       "10108": {
         "raceTrackId": 10001,
-        "name": "ダート2400m",
+        "name": "沙地2400m",
         "distance": 2400,
         "distanceType": 3,
         "surface": 2,
@@ -408,7 +408,7 @@ internal val rawCourseData = """
     "courses": {
       "10201": {
         "raceTrackId": 10002,
-        "name": "芝1000m",
+        "name": "草地1000m",
         "distance": 1000,
         "distanceType": 1,
         "surface": 1,
@@ -449,7 +449,7 @@ internal val rawCourseData = """
       },
       "10202": {
         "raceTrackId": 10002,
-        "name": "芝1200m",
+        "name": "草地1200m",
         "distance": 1200,
         "distanceType": 1,
         "surface": 1,
@@ -490,7 +490,7 @@ internal val rawCourseData = """
       },
       "10203": {
         "raceTrackId": 10002,
-        "name": "芝1800m",
+        "name": "草地1800m",
         "distance": 1800,
         "distanceType": 2,
         "surface": 1,
@@ -550,7 +550,7 @@ internal val rawCourseData = """
       },
       "10204": {
         "raceTrackId": 10002,
-        "name": "芝2000m",
+        "name": "草地2000m",
         "distance": 2000,
         "distanceType": 3,
         "surface": 1,
@@ -610,7 +610,7 @@ internal val rawCourseData = """
       },
       "10205": {
         "raceTrackId": 10002,
-        "name": "芝2600m",
+        "name": "草地2600m",
         "distance": 2600,
         "distanceType": 4,
         "surface": 1,
@@ -687,7 +687,7 @@ internal val rawCourseData = """
       },
       "10206": {
         "raceTrackId": 10002,
-        "name": "ダート1000m",
+        "name": "沙地1000m",
         "distance": 1000,
         "distanceType": 1,
         "surface": 2,
@@ -722,7 +722,7 @@ internal val rawCourseData = """
       },
       "10207": {
         "raceTrackId": 10002,
-        "name": "ダート1700m",
+        "name": "沙地1700m",
         "distance": 1700,
         "distanceType": 2,
         "surface": 2,
@@ -780,7 +780,7 @@ internal val rawCourseData = """
       },
       "10208": {
         "raceTrackId": 10002,
-        "name": "ダート2400m",
+        "name": "沙地2400m",
         "distance": 2400,
         "distanceType": 3,
         "surface": 2,
@@ -846,7 +846,7 @@ internal val rawCourseData = """
     "courses": {
       "10301": {
         "raceTrackId": 10003,
-        "name": "芝1000m",
+        "name": "草地1000m",
         "distance": 1000,
         "distanceType": 1,
         "surface": 1,
@@ -881,7 +881,7 @@ internal val rawCourseData = """
       },
       "10302": {
         "raceTrackId": 10003,
-        "name": "芝1200m(内)",
+        "name": "草地1200m(内)",
         "distance": 1200,
         "distanceType": 1,
         "surface": 1,
@@ -916,7 +916,7 @@ internal val rawCourseData = """
       },
       "10303": {
         "raceTrackId": 10003,
-        "name": "芝1400m(内)",
+        "name": "草地1400m(内)",
         "distance": 1400,
         "distanceType": 1,
         "surface": 1,
@@ -951,7 +951,7 @@ internal val rawCourseData = """
       },
       "10304": {
         "raceTrackId": 10003,
-        "name": "芝1600m(外)",
+        "name": "草地1600m(外)",
         "distance": 1600,
         "distanceType": 2,
         "surface": 1,
@@ -997,7 +997,7 @@ internal val rawCourseData = """
       },
       "10305": {
         "raceTrackId": 10003,
-        "name": "芝1800m(外)",
+        "name": "草地1800m(外)",
         "distance": 1800,
         "distanceType": 2,
         "surface": 1,
@@ -1045,7 +1045,7 @@ internal val rawCourseData = """
       },
       "10306": {
         "raceTrackId": 10003,
-        "name": "芝2000m(内)",
+        "name": "草地2000m(内)",
         "distance": 2000,
         "distanceType": 3,
         "surface": 1,
@@ -1095,7 +1095,7 @@ internal val rawCourseData = """
       },
       "10307": {
         "raceTrackId": 10003,
-        "name": "芝2000m(外)",
+        "name": "草地2000m(外)",
         "distance": 2000,
         "distanceType": 3,
         "surface": 1,
@@ -1144,7 +1144,7 @@ internal val rawCourseData = """
       },
       "10308": {
         "raceTrackId": 10003,
-        "name": "芝2200m(内)",
+        "name": "草地2200m(内)",
         "distance": 2200,
         "distanceType": 3,
         "surface": 1,
@@ -1193,7 +1193,7 @@ internal val rawCourseData = """
       },
       "10309": {
         "raceTrackId": 10003,
-        "name": "芝2400m(内)",
+        "name": "草地2400m(内)",
         "distance": 2400,
         "distanceType": 3,
         "surface": 1,
@@ -1240,7 +1240,7 @@ internal val rawCourseData = """
       },
       "10310": {
         "raceTrackId": 10003,
-        "name": "ダート1200m",
+        "name": "沙地1200m",
         "distance": 1200,
         "distanceType": 1,
         "surface": 2,
@@ -1275,7 +1275,7 @@ internal val rawCourseData = """
       },
       "10311": {
         "raceTrackId": 10003,
-        "name": "ダート1800m",
+        "name": "沙地1800m",
         "distance": 1800,
         "distanceType": 2,
         "surface": 2,
@@ -1324,7 +1324,7 @@ internal val rawCourseData = """
       },
       "10312": {
         "raceTrackId": 10003,
-        "name": "ダート2500m",
+        "name": "沙地2500m",
         "distance": 2500,
         "distanceType": 4,
         "surface": 2,
@@ -1388,7 +1388,7 @@ internal val rawCourseData = """
     "courses": {
       "10401": {
         "raceTrackId": 10004,
-        "name": "芝1200m",
+        "name": "草地1200m",
         "distance": 1200,
         "distanceType": 1,
         "surface": 1,
@@ -1429,7 +1429,7 @@ internal val rawCourseData = """
       },
       "10402": {
         "raceTrackId": 10004,
-        "name": "芝1800m",
+        "name": "草地1800m",
         "distance": 1800,
         "distanceType": 2,
         "surface": 1,
@@ -1484,7 +1484,7 @@ internal val rawCourseData = """
       },
       "10403": {
         "raceTrackId": 10004,
-        "name": "芝2000m",
+        "name": "草地2000m",
         "distance": 2000,
         "distanceType": 3,
         "surface": 1,
@@ -1539,7 +1539,7 @@ internal val rawCourseData = """
       },
       "10404": {
         "raceTrackId": 10004,
-        "name": "芝2600m",
+        "name": "草地2600m",
         "distance": 2600,
         "distanceType": 4,
         "surface": 1,
@@ -1609,7 +1609,7 @@ internal val rawCourseData = """
       },
       "10405": {
         "raceTrackId": 10004,
-        "name": "ダート1150m",
+        "name": "沙地1150m",
         "distance": 1150,
         "distanceType": 1,
         "surface": 2,
@@ -1644,7 +1644,7 @@ internal val rawCourseData = """
       },
       "10406": {
         "raceTrackId": 10004,
-        "name": "ダート1700m",
+        "name": "沙地1700m",
         "distance": 1700,
         "distanceType": 2,
         "surface": 2,
@@ -1699,7 +1699,7 @@ internal val rawCourseData = """
       },
       "10407": {
         "raceTrackId": 10004,
-        "name": "ダート2400m",
+        "name": "沙地2400m",
         "distance": 2400,
         "distanceType": 3,
         "surface": 2,
@@ -1765,7 +1765,7 @@ internal val rawCourseData = """
     "courses": {
       "10501": {
         "raceTrackId": 10005,
-        "name": "芝1200m(外)",
+        "name": "草地1200m(外)",
         "distance": 1200,
         "distanceType": 1,
         "surface": 1,
@@ -1807,7 +1807,7 @@ internal val rawCourseData = """
       },
       "10502": {
         "raceTrackId": 10005,
-        "name": "芝1600m(外)",
+        "name": "草地1600m(外)",
         "distance": 1600,
         "distanceType": 2,
         "surface": 1,
@@ -1855,7 +1855,7 @@ internal val rawCourseData = """
       },
       "10503": {
         "raceTrackId": 10005,
-        "name": "芝1800m(内)",
+        "name": "草地1800m(内)",
         "distance": 1800,
         "distanceType": 2,
         "surface": 1,
@@ -1923,7 +1923,7 @@ internal val rawCourseData = """
       },
       "10504": {
         "raceTrackId": 10005,
-        "name": "芝2000m(内)",
+        "name": "草地2000m(内)",
         "distance": 2000,
         "distanceType": 3,
         "surface": 1,
@@ -1993,7 +1993,7 @@ internal val rawCourseData = """
       },
       "10505": {
         "raceTrackId": 10005,
-        "name": "芝2200m(外)",
+        "name": "草地2200m(外)",
         "distance": 2200,
         "distanceType": 3,
         "surface": 1,
@@ -2060,7 +2060,7 @@ internal val rawCourseData = """
       },
       "10506": {
         "raceTrackId": 10005,
-        "name": "芝2500m(内)",
+        "name": "草地2500m(内)",
         "distance": 2500,
         "distanceType": 4,
         "surface": 1,
@@ -2139,7 +2139,7 @@ internal val rawCourseData = """
       },
       "10507": {
         "raceTrackId": 10005,
-        "name": "芝3600m(内)",
+        "name": "草地3600m(内)",
         "distance": 3600,
         "distanceType": 4,
         "surface": 1,
@@ -2248,7 +2248,7 @@ internal val rawCourseData = """
       },
       "10508": {
         "raceTrackId": 10005,
-        "name": "ダート1200m",
+        "name": "沙地1200m",
         "distance": 1200,
         "distanceType": 1,
         "surface": 2,
@@ -2296,7 +2296,7 @@ internal val rawCourseData = """
       },
       "10509": {
         "raceTrackId": 10005,
-        "name": "ダート1800m",
+        "name": "沙地1800m",
         "distance": 1800,
         "distanceType": 2,
         "surface": 2,
@@ -2366,7 +2366,7 @@ internal val rawCourseData = """
       },
       "10510": {
         "raceTrackId": 10005,
-        "name": "ダート2400m",
+        "name": "沙地2400m",
         "distance": 2400,
         "distanceType": 3,
         "surface": 2,
@@ -2427,7 +2427,7 @@ internal val rawCourseData = """
       },
       "10511": {
         "raceTrackId": 10005,
-        "name": "ダート2500m",
+        "name": "沙地2500m",
         "distance": 2500,
         "distanceType": 4,
         "surface": 2,
@@ -2491,7 +2491,7 @@ internal val rawCourseData = """
     "courses": {
       "10601": {
         "raceTrackId": 10006,
-        "name": "芝1400m",
+        "name": "草地1400m",
         "distance": 1400,
         "distanceType": 1,
         "surface": 1,
@@ -2545,7 +2545,7 @@ internal val rawCourseData = """
       },
       "10602": {
         "raceTrackId": 10006,
-        "name": "芝1600m",
+        "name": "草地1600m",
         "distance": 1600,
         "distanceType": 2,
         "surface": 1,
@@ -2599,7 +2599,7 @@ internal val rawCourseData = """
       },
       "10603": {
         "raceTrackId": 10006,
-        "name": "芝1800m",
+        "name": "草地1800m",
         "distance": 1800,
         "distanceType": 2,
         "surface": 1,
@@ -2656,7 +2656,7 @@ internal val rawCourseData = """
       },
       "10604": {
         "raceTrackId": 10006,
-        "name": "芝2000m",
+        "name": "草地2000m",
         "distance": 2000,
         "distanceType": 3,
         "surface": 1,
@@ -2711,7 +2711,7 @@ internal val rawCourseData = """
       },
       "10605": {
         "raceTrackId": 10006,
-        "name": "芝2300m",
+        "name": "草地2300m",
         "distance": 2300,
         "distanceType": 3,
         "surface": 1,
@@ -2776,7 +2776,7 @@ internal val rawCourseData = """
       },
       "10606": {
         "raceTrackId": 10006,
-        "name": "芝2400m",
+        "name": "草地2400m",
         "distance": 2400,
         "distanceType": 3,
         "surface": 1,
@@ -2844,7 +2844,7 @@ internal val rawCourseData = """
       },
       "10607": {
         "raceTrackId": 10006,
-        "name": "芝2500m",
+        "name": "草地2500m",
         "distance": 2500,
         "distanceType": 4,
         "surface": 1,
@@ -2914,7 +2914,7 @@ internal val rawCourseData = """
       },
       "10608": {
         "raceTrackId": 10006,
-        "name": "芝3400m",
+        "name": "草地3400m",
         "distance": 3400,
         "distanceType": 4,
         "surface": 1,
@@ -3004,7 +3004,7 @@ internal val rawCourseData = """
       },
       "10609": {
         "raceTrackId": 10006,
-        "name": "ダート1300m",
+        "name": "沙地1300m",
         "distance": 1300,
         "distanceType": 1,
         "surface": 2,
@@ -3052,7 +3052,7 @@ internal val rawCourseData = """
       },
       "10610": {
         "raceTrackId": 10006,
-        "name": "ダート1400m",
+        "name": "沙地1400m",
         "distance": 1400,
         "distanceType": 1,
         "surface": 2,
@@ -3100,7 +3100,7 @@ internal val rawCourseData = """
       },
       "10611": {
         "raceTrackId": 10006,
-        "name": "ダート1600m",
+        "name": "沙地1600m",
         "distance": 1600,
         "distanceType": 2,
         "surface": 2,
@@ -3149,7 +3149,7 @@ internal val rawCourseData = """
       },
       "10612": {
         "raceTrackId": 10006,
-        "name": "ダート2100m",
+        "name": "沙地2100m",
         "distance": 2100,
         "distanceType": 3,
         "surface": 2,
@@ -3207,7 +3207,7 @@ internal val rawCourseData = """
       },
       "10613": {
         "raceTrackId": 10006,
-        "name": "ダート2400m",
+        "name": "沙地2400m",
         "distance": 2400,
         "distanceType": 3,
         "surface": 2,
@@ -3265,7 +3265,7 @@ internal val rawCourseData = """
     "courses": {
       "10701": {
         "raceTrackId": 10007,
-        "name": "芝1200m",
+        "name": "草地1200m",
         "distance": 1200,
         "distanceType": 1,
         "surface": 1,
@@ -3311,7 +3311,7 @@ internal val rawCourseData = """
       },
       "10702": {
         "raceTrackId": 10007,
-        "name": "芝1400m",
+        "name": "草地1400m",
         "distance": 1400,
         "distanceType": 1,
         "surface": 1,
@@ -3357,7 +3357,7 @@ internal val rawCourseData = """
       },
       "10703": {
         "raceTrackId": 10007,
-        "name": "芝1600m",
+        "name": "草地1600m",
         "distance": 1600,
         "distanceType": 2,
         "surface": 1,
@@ -3409,7 +3409,7 @@ internal val rawCourseData = """
       },
       "10704": {
         "raceTrackId": 10007,
-        "name": "芝2000m",
+        "name": "草地2000m",
         "distance": 2000,
         "distanceType": 3,
         "surface": 1,
@@ -3472,7 +3472,7 @@ internal val rawCourseData = """
       },
       "10705": {
         "raceTrackId": 10007,
-        "name": "芝2200m",
+        "name": "草地2200m",
         "distance": 2200,
         "distanceType": 3,
         "surface": 1,
@@ -3542,7 +3542,7 @@ internal val rawCourseData = """
       },
       "10706": {
         "raceTrackId": 10007,
-        "name": "ダート1200m",
+        "name": "沙地1200m",
         "distance": 1200,
         "distanceType": 1,
         "surface": 2,
@@ -3577,7 +3577,7 @@ internal val rawCourseData = """
       },
       "10707": {
         "raceTrackId": 10007,
-        "name": "ダート1400m",
+        "name": "沙地1400m",
         "distance": 1400,
         "distanceType": 1,
         "surface": 2,
@@ -3623,7 +3623,7 @@ internal val rawCourseData = """
       },
       "10708": {
         "raceTrackId": 10007,
-        "name": "ダート1800m",
+        "name": "沙地1800m",
         "distance": 1800,
         "distanceType": 2,
         "surface": 2,
@@ -3688,7 +3688,7 @@ internal val rawCourseData = """
       },
       "10709": {
         "raceTrackId": 10007,
-        "name": "ダート1900m",
+        "name": "沙地1900m",
         "distance": 1900,
         "distanceType": 3,
         "surface": 2,
@@ -3740,7 +3740,7 @@ internal val rawCourseData = """
     "courses": {
       "10801": {
         "raceTrackId": 10008,
-        "name": "芝1200m(内)",
+        "name": "草地1200m(内)",
         "distance": 1200,
         "distanceType": 1,
         "surface": 1,
@@ -3786,7 +3786,7 @@ internal val rawCourseData = """
       },
       "10802": {
         "raceTrackId": 10008,
-        "name": "芝1400m(内)",
+        "name": "草地1400m(内)",
         "distance": 1400,
         "distanceType": 1,
         "surface": 1,
@@ -3832,7 +3832,7 @@ internal val rawCourseData = """
       },
       "10803": {
         "raceTrackId": 10008,
-        "name": "芝1400m(外)",
+        "name": "草地1400m(外)",
         "distance": 1400,
         "distanceType": 1,
         "surface": 1,
@@ -3883,7 +3883,7 @@ internal val rawCourseData = """
       },
       "10804": {
         "raceTrackId": 10008,
-        "name": "芝1600m(内)",
+        "name": "草地1600m(内)",
         "distance": 1600,
         "distanceType": 2,
         "surface": 1,
@@ -3931,7 +3931,7 @@ internal val rawCourseData = """
       },
       "10805": {
         "raceTrackId": 10008,
-        "name": "芝1600m(外)",
+        "name": "草地1600m(外)",
         "distance": 1600,
         "distanceType": 2,
         "surface": 1,
@@ -3984,7 +3984,7 @@ internal val rawCourseData = """
       },
       "10806": {
         "raceTrackId": 10008,
-        "name": "芝1800m(外)",
+        "name": "草地1800m(外)",
         "distance": 1800,
         "distanceType": 2,
         "surface": 1,
@@ -4035,7 +4035,7 @@ internal val rawCourseData = """
       },
       "10807": {
         "raceTrackId": 10008,
-        "name": "芝2000m(内)",
+        "name": "草地2000m(内)",
         "distance": 2000,
         "distanceType": 3,
         "surface": 1,
@@ -4095,7 +4095,7 @@ internal val rawCourseData = """
       },
       "10808": {
         "raceTrackId": 10008,
-        "name": "芝2200m(外)",
+        "name": "草地2200m(外)",
         "distance": 2200,
         "distanceType": 3,
         "surface": 1,
@@ -4160,7 +4160,7 @@ internal val rawCourseData = """
       },
       "10809": {
         "raceTrackId": 10008,
-        "name": "芝2400m(外)",
+        "name": "草地2400m(外)",
         "distance": 2400,
         "distanceType": 3,
         "surface": 1,
@@ -4225,7 +4225,7 @@ internal val rawCourseData = """
       },
       "10810": {
         "raceTrackId": 10008,
-        "name": "芝3000m(外)",
+        "name": "草地3000m(外)",
         "distance": 3000,
         "distanceType": 4,
         "surface": 1,
@@ -4318,7 +4318,7 @@ internal val rawCourseData = """
       },
       "10811": {
         "raceTrackId": 10008,
-        "name": "芝3200m(外)",
+        "name": "草地3200m(外)",
         "distance": 3200,
         "distanceType": 4,
         "surface": 1,
@@ -4408,7 +4408,7 @@ internal val rawCourseData = """
       },
       "10812": {
         "raceTrackId": 10008,
-        "name": "ダート1200m",
+        "name": "沙地1200m",
         "distance": 1200,
         "distanceType": 1,
         "surface": 2,
@@ -4454,7 +4454,7 @@ internal val rawCourseData = """
       },
       "10813": {
         "raceTrackId": 10008,
-        "name": "ダート1400m",
+        "name": "沙地1400m",
         "distance": 1400,
         "distanceType": 1,
         "surface": 2,
@@ -4500,7 +4500,7 @@ internal val rawCourseData = """
       },
       "10814": {
         "raceTrackId": 10008,
-        "name": "ダート1800m",
+        "name": "沙地1800m",
         "distance": 1800,
         "distanceType": 2,
         "surface": 2,
@@ -4558,7 +4558,7 @@ internal val rawCourseData = """
       },
       "10815": {
         "raceTrackId": 10008,
-        "name": "ダート1900m",
+        "name": "沙地1900m",
         "distance": 1900,
         "distanceType": 3,
         "surface": 2,
@@ -4621,7 +4621,7 @@ internal val rawCourseData = """
     "courses": {
       "10901": {
         "raceTrackId": 10009,
-        "name": "芝1200m(内)",
+        "name": "草地1200m(内)",
         "distance": 1200,
         "distanceType": 1,
         "surface": 1,
@@ -4667,7 +4667,7 @@ internal val rawCourseData = """
       },
       "10902": {
         "raceTrackId": 10009,
-        "name": "芝1400m(内)",
+        "name": "草地1400m(内)",
         "distance": 1400,
         "distanceType": 1,
         "surface": 1,
@@ -4713,7 +4713,7 @@ internal val rawCourseData = """
       },
       "10903": {
         "raceTrackId": 10009,
-        "name": "芝1600m(外)",
+        "name": "草地1600m(外)",
         "distance": 1600,
         "distanceType": 2,
         "surface": 1,
@@ -4761,7 +4761,7 @@ internal val rawCourseData = """
       },
       "10904": {
         "raceTrackId": 10009,
-        "name": "芝1800m(外)",
+        "name": "草地1800m(外)",
         "distance": 1800,
         "distanceType": 2,
         "surface": 1,
@@ -4809,7 +4809,7 @@ internal val rawCourseData = """
       },
       "10905": {
         "raceTrackId": 10009,
-        "name": "芝2000m(内)",
+        "name": "草地2000m(内)",
         "distance": 2000,
         "distanceType": 3,
         "surface": 1,
@@ -4879,7 +4879,7 @@ internal val rawCourseData = """
       },
       "10906": {
         "raceTrackId": 10009,
-        "name": "芝2200m(内)",
+        "name": "草地2200m(内)",
         "distance": 2200,
         "distanceType": 3,
         "surface": 1,
@@ -4949,7 +4949,7 @@ internal val rawCourseData = """
       },
       "10907": {
         "raceTrackId": 10009,
-        "name": "芝2400m(外)",
+        "name": "草地2400m(外)",
         "distance": 2400,
         "distanceType": 3,
         "surface": 1,
@@ -5019,7 +5019,7 @@ internal val rawCourseData = """
       },
       "10908": {
         "raceTrackId": 10009,
-        "name": "芝2600m(外)",
+        "name": "草地2600m(外)",
         "distance": 2600,
         "distanceType": 4,
         "surface": 1,
@@ -5087,7 +5087,7 @@ internal val rawCourseData = """
       },
       "10909": {
         "raceTrackId": 10009,
-        "name": "芝3000m(内)",
+        "name": "草地3000m(内)",
         "distance": 3000,
         "distanceType": 4,
         "surface": 1,
@@ -5169,7 +5169,7 @@ internal val rawCourseData = """
       },
       "10910": {
         "raceTrackId": 10009,
-        "name": "ダート1200m",
+        "name": "沙地1200m",
         "distance": 1200,
         "distanceType": 1,
         "surface": 2,
@@ -5215,7 +5215,7 @@ internal val rawCourseData = """
       },
       "10911": {
         "raceTrackId": 10009,
-        "name": "ダート1400m",
+        "name": "沙地1400m",
         "distance": 1400,
         "distanceType": 1,
         "surface": 2,
@@ -5261,7 +5261,7 @@ internal val rawCourseData = """
       },
       "10912": {
         "raceTrackId": 10009,
-        "name": "ダート1800m",
+        "name": "沙地1800m",
         "distance": 1800,
         "distanceType": 2,
         "surface": 2,
@@ -5324,7 +5324,7 @@ internal val rawCourseData = """
       },
       "10913": {
         "raceTrackId": 10009,
-        "name": "ダート2000m",
+        "name": "沙地2000m",
         "distance": 2000,
         "distanceType": 3,
         "surface": 2,
@@ -5395,7 +5395,7 @@ internal val rawCourseData = """
       },
       "10914": {
         "raceTrackId": 10009,
-        "name": "芝3200m(外→内)",
+        "name": "草地3200m(外→内)",
         "distance": 3200,
         "distanceType": 4,
         "surface": 1,
@@ -5480,7 +5480,7 @@ internal val rawCourseData = """
     "courses": {
       "11001": {
         "raceTrackId": 10010,
-        "name": "芝1200m",
+        "name": "草地1200m",
         "distance": 1200,
         "distanceType": 1,
         "surface": 1,
@@ -5523,7 +5523,7 @@ internal val rawCourseData = """
       },
       "11002": {
         "raceTrackId": 10010,
-        "name": "芝1800m",
+        "name": "草地1800m",
         "distance": 1800,
         "distanceType": 2,
         "surface": 1,
@@ -5576,7 +5576,7 @@ internal val rawCourseData = """
       },
       "11003": {
         "raceTrackId": 10010,
-        "name": "芝2000m",
+        "name": "草地2000m",
         "distance": 2000,
         "distanceType": 3,
         "surface": 1,
@@ -5631,7 +5631,7 @@ internal val rawCourseData = """
       },
       "11004": {
         "raceTrackId": 10010,
-        "name": "芝2600m",
+        "name": "草地2600m",
         "distance": 2600,
         "distanceType": 4,
         "surface": 1,
@@ -5698,7 +5698,7 @@ internal val rawCourseData = """
       },
       "11005": {
         "raceTrackId": 10010,
-        "name": "ダート1000m",
+        "name": "沙地1000m",
         "distance": 1000,
         "distanceType": 1,
         "surface": 2,
@@ -5735,7 +5735,7 @@ internal val rawCourseData = """
       },
       "11006": {
         "raceTrackId": 10010,
-        "name": "ダート1700m",
+        "name": "沙地1700m",
         "distance": 1700,
         "distanceType": 2,
         "surface": 2,
@@ -5788,7 +5788,7 @@ internal val rawCourseData = """
       },
       "11007": {
         "raceTrackId": 10010,
-        "name": "ダート2400m",
+        "name": "沙地2400m",
         "distance": 2400,
         "distanceType": 3,
         "surface": 2,
@@ -5852,7 +5852,7 @@ internal val rawCourseData = """
     "courses": {
       "11101": {
         "raceTrackId": 10101,
-        "name": "ダート1200m",
+        "name": "沙地1200m",
         "distance": 1200,
         "distanceType": 1,
         "surface": 2,
@@ -5890,7 +5890,7 @@ internal val rawCourseData = """
       },
       "11102": {
         "raceTrackId": 10101,
-        "name": "ダート1800m",
+        "name": "沙地1800m",
         "distance": 1800,
         "distanceType": 2,
         "surface": 2,
@@ -5939,7 +5939,7 @@ internal val rawCourseData = """
       },
       "11103": {
         "raceTrackId": 10101,
-        "name": "ダート2000m",
+        "name": "沙地2000m",
         "distance": 2000,
         "distanceType": 3,
         "surface": 2,
@@ -5989,11 +5989,11 @@ internal val rawCourseData = """
     }
   },
   "10201": {
-    "name": "ロンシャン",
+    "name": "隆尚",
     "courses": {
       "11203": {
         "raceTrackId": 10201,
-        "name": "芝2400m",
+        "name": "草地2400m",
         "distance": 2400,
         "distanceType": 3,
         "surface": 1,
@@ -6056,7 +6056,7 @@ internal val rawCourseData = """
     "courses": {
       "11301": {
         "raceTrackId": 10103,
-        "name": "ダート1400m",
+        "name": "沙地1400m",
         "distance": 1400,
         "distanceType": 1,
         "surface": 2,
@@ -6105,7 +6105,7 @@ internal val rawCourseData = """
       },
       "11302": {
         "raceTrackId": 10103,
-        "name": "ダート1600m",
+        "name": "沙地1600m",
         "distance": 1600,
         "distanceType": 2,
         "surface": 2,
@@ -6154,7 +6154,7 @@ internal val rawCourseData = """
       },
       "11303": {
         "raceTrackId": 10103,
-        "name": "ダート2100m",
+        "name": "沙地2100m",
         "distance": 2100,
         "distanceType": 3,
         "surface": 2,
@@ -6221,7 +6221,7 @@ internal val rawCourseData = """
     "courses": {
       "11401": {
         "raceTrackId": 10104,
-        "name": "ダート1000m",
+        "name": "沙地1000m",
         "distance": 1000,
         "distanceType": 1,
         "surface": 2,
@@ -6258,7 +6258,7 @@ internal val rawCourseData = """
       },
       "11402": {
         "raceTrackId": 10104,
-        "name": "ダート1600m",
+        "name": "沙地1600m",
         "distance": 1600,
         "distanceType": 2,
         "surface": 2,
@@ -6305,7 +6305,7 @@ internal val rawCourseData = """
       },
       "11403": {
         "raceTrackId": 10104,
-        "name": "ダート1800m",
+        "name": "沙地1800m",
         "distance": 1800,
         "distanceType": 2,
         "surface": 2,
@@ -6352,7 +6352,7 @@ internal val rawCourseData = """
       },
       "11404": {
         "raceTrackId": 10104,
-        "name": "ダート2400m",
+        "name": "沙地2400m",
         "distance": 2400,
         "distanceType": 3,
         "surface": 2,
@@ -6418,7 +6418,7 @@ internal val rawCourseData = """
     "courses": {
       "11501": {
         "raceTrackId": 10105,
-        "name": "ダート1200m",
+        "name": "沙地1200m",
         "distance": 1200,
         "distanceType": 1,
         "surface": 2,
@@ -6471,7 +6471,7 @@ internal val rawCourseData = """
       },
       "11502": {
         "raceTrackId": 10105,
-        "name": "ダート1600m",
+        "name": "沙地1600m",
         "distance": 1600,
         "distanceType": 2,
         "surface": 2,
@@ -6525,7 +6525,7 @@ internal val rawCourseData = """
       },
       "11503": {
         "raceTrackId": 10105,
-        "name": "ダート1800m",
+        "name": "沙地1800m",
         "distance": 1800,
         "distanceType": 2,
         "surface": 2,
@@ -6591,7 +6591,7 @@ internal val rawCourseData = """
       },
       "11504": {
         "raceTrackId": 10105,
-        "name": "ダート2000m",
+        "name": "沙地2000m",
         "distance": 2000,
         "distanceType": 3,
         "surface": 2,
@@ -6662,11 +6662,11 @@ internal val rawCourseData = """
     }
   },
   "10202": {
-    "name": "サンタアニタパーク",
+    "name": "圣安妮塔",
     "courses": {
       "11613": {
         "raceTrackId": 10202,
-        "name": "芝1000m",
+        "name": "草地1000m",
         "distance": 1000,
         "distanceType": 1,
         "surface": 1,
@@ -6704,7 +6704,7 @@ internal val rawCourseData = """
       },
       "11614": {
         "raceTrackId": 10202,
-        "name": "芝1600m",
+        "name": "草地1600m",
         "distance": 1600,
         "distanceType": 2,
         "surface": 1,
@@ -6753,7 +6753,7 @@ internal val rawCourseData = """
       },
       "11615": {
         "raceTrackId": 10202,
-        "name": "芝2000m",
+        "name": "草地2000m",
         "distance": 2000,
         "distanceType": 3,
         "surface": 1,
@@ -6813,7 +6813,7 @@ internal val rawCourseData = """
       },
       "11616": {
         "raceTrackId": 10202,
-        "name": "芝2400m",
+        "name": "草地2400m",
         "distance": 2400,
         "distanceType": 3,
         "surface": 1,
@@ -6873,7 +6873,7 @@ internal val rawCourseData = """
       },
       "11617": {
         "raceTrackId": 10202,
-        "name": "ダート1200m",
+        "name": "沙地1200m",
         "distance": 1200,
         "distanceType": 1,
         "surface": 2,
@@ -6911,7 +6911,7 @@ internal val rawCourseData = """
       },
       "11618": {
         "raceTrackId": 10202,
-        "name": "ダート1400m",
+        "name": "沙地1400m",
         "distance": 1400,
         "distanceType": 1,
         "surface": 2,
@@ -6948,7 +6948,7 @@ internal val rawCourseData = """
       },
       "11619": {
         "raceTrackId": 10202,
-        "name": "ダート1600m",
+        "name": "沙地1600m",
         "distance": 1600,
         "distanceType": 2,
         "surface": 2,
@@ -6998,7 +6998,7 @@ internal val rawCourseData = """
       },
       "11620": {
         "raceTrackId": 10202,
-        "name": "ダート1800m",
+        "name": "沙地1800m",
         "distance": 1800,
         "distanceType": 2,
         "surface": 2,
@@ -7047,7 +7047,7 @@ internal val rawCourseData = """
       },
       "11621": {
         "raceTrackId": 10202,
-        "name": "ダート2000m",
+        "name": "沙地2000m",
         "distance": 2000,
         "distanceType": 3,
         "surface": 2,
@@ -7098,11 +7098,11 @@ internal val rawCourseData = """
     }
   },
   "10203": {
-    "name": "デルマー",
+    "name": "德尔玛",
     "courses": {
       "11701": {
         "raceTrackId": 10203,
-        "name": "芝1000m",
+        "name": "草地1000m",
         "distance": 1000,
         "distanceType": 1,
         "surface": 1,
@@ -7140,7 +7140,7 @@ internal val rawCourseData = """
       },
       "11702": {
         "raceTrackId": 10203,
-        "name": "芝1600m",
+        "name": "草地1600m",
         "distance": 1600,
         "distanceType": 2,
         "surface": 1,
@@ -7189,7 +7189,7 @@ internal val rawCourseData = """
       },
       "11703": {
         "raceTrackId": 10203,
-        "name": "芝2200m",
+        "name": "草地2200m",
         "distance": 2200,
         "distanceType": 3,
         "surface": 1,
@@ -7251,7 +7251,7 @@ internal val rawCourseData = """
       },
       "11704": {
         "raceTrackId": 10203,
-        "name": "芝2400m",
+        "name": "草地2400m",
         "distance": 2400,
         "distanceType": 3,
         "surface": 1,
@@ -7313,7 +7313,7 @@ internal val rawCourseData = """
       },
       "11705": {
         "raceTrackId": 10203,
-        "name": "ダート1200m",
+        "name": "沙地1200m",
         "distance": 1200,
         "distanceType": 1,
         "surface": 2,
@@ -7351,7 +7351,7 @@ internal val rawCourseData = """
       },
       "11706": {
         "raceTrackId": 10203,
-        "name": "ダート1400m",
+        "name": "沙地1400m",
         "distance": 1400,
         "distanceType": 1,
         "surface": 2,
@@ -7388,7 +7388,7 @@ internal val rawCourseData = """
       },
       "11707": {
         "raceTrackId": 10203,
-        "name": "ダート1600m",
+        "name": "沙地1600m",
         "distance": 1600,
         "distanceType": 2,
         "surface": 2,
@@ -7438,7 +7438,7 @@ internal val rawCourseData = """
       },
       "11708": {
         "raceTrackId": 10203,
-        "name": "ダート1800m",
+        "name": "沙地1800m",
         "distance": 1800,
         "distanceType": 2,
         "surface": 2,
@@ -7487,7 +7487,7 @@ internal val rawCourseData = """
       },
       "11709": {
         "raceTrackId": 10203,
-        "name": "ダート2000m",
+        "name": "沙地2000m",
         "distance": 2000,
         "distanceType": 3,
         "surface": 2,

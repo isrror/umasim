@@ -30,7 +30,7 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 import kotlin.math.*
 
-const val NOT_SELECTED = "(未選択)"
+const val NOT_SELECTED = "(未选择)"
 
 @Serializable
 sealed interface DebuffTrigger {
@@ -46,21 +46,21 @@ enum class DebuffType(
     val value: Int,
     val distanceType: Int? = null,
 ) {
-    Kensei("けん制", 0, 100),
-    Aseri("焦り", 1, 100),
-    NukegakeGold("逃亡禁止令", 0, 300, distanceType = 1),
-    Nukegake("抜け駆け禁止", 0, 100, distanceType = 1),
-    SasayakiGold("魅惑のささやき", 1, 300, distanceType = 3),
-    Sasayaki("ささやき", 1, 100, distanceType = 3),
-    StaminaEaterGold("スタミナグリード", 1, 100, distanceType = 4),
-    StaminaEater("スタミナイーター", 1, 50, distanceType = 4),
-    GankouGold("八方にらみ", 2, 300),
-    Gankou("鋭い眼光", 2, 100),
-    TrickGold("見惚れるトリック", DebuffTrigger.Temptation(1), 300),
-    Trick("トリック（前/後）", DebuffTrigger.Temptation(1), 100),
+    Kensei("牵制", 0, 100),
+    Aseri("焦躁", 1, 100),
+    NukegakeGold("逃亡禁令", 0, 300, distanceType = 1),
+    Nukegake("禁止搶先", 0, 100, distanceType = 1),
+    SasayakiGold("魅惑的細語", 1, 300, distanceType = 3),
+    Sasayaki("細語", 1, 100, distanceType = 3),
+    StaminaEaterGold("持久力貪食者", 1, 100, distanceType = 4),
+    StaminaEater("持久力吞噬者", 1, 50, distanceType = 4),
+    GankouGold("緊盯八方", 2, 300),
+    Gankou("銳利眼光", 2, 100),
+    TrickGold("吸睛謀略", DebuffTrigger.Temptation(1), 300),
+    Trick("謀略 （前/后）", DebuffTrigger.Temptation(1), 100),
     DrainForRose("Drain for rose（本体）", 1, 50),
-    DrainForRose2("Drain for rose（継承）", 1, 25),
-    Gorushi("Adventure of 564+金スタデバ", DebuffTrigger.RandomLaterHalf, 300)
+    DrainForRose2("Drain for rose（继承）", 1, 25),
+    Gorushi("Adventure of 564+金耐力减益", DebuffTrigger.RandomLaterHalf, 300)
     ;
 
     constructor(

@@ -28,11 +28,11 @@ import kotlin.math.roundToInt
 fun SummaryOutput(state: AppState) {
     val summary = state.simulationSummary ?: return
     Column {
-        Text("結果", style = MaterialTheme.typography.headlineSmall)
-        Text("最大スパート率：${summary.spurtRate.toPercentString(2)}")
+        Text("结果", style = MaterialTheme.typography.headlineSmall)
+        Text("最大冲刺率：${summary.spurtRate.toPercentString(2)}")
         SummaryTable(summary)
         if (state.simulationSummary.setting.trackDetail.runUp > 0) {
-            Text("※各タイムは助走区間分を含む")
+            Text("※各时间包含助跑区间")
         }
         SkillTable(summary)
     }
@@ -40,17 +40,17 @@ fun SummaryOutput(state: AppState) {
 
 private val tableHeader = listOf(
     "",
-    "平均タイム",
-    "最速タイム",
-    "最遅タイム",
-    "平均余剰耐力",
-    "最大余剰耐力",
-    "最小余剰耐力",
-    "位置取り調整回数",
-    "持久力温存発生率",
-    "持久力温存平均距離",
-    "追い比べ完走率",
-    "追い比べ平均時間",
+    "平均时间",
+    "最快时间",
+    "最慢时间",
+    "平均剩余耐力",
+    "最大剩余耐力",
+    "最小剩余耐力",
+    "取位调整次数",
+    "持久力温存触发率",
+    "持久力温存平均距离",
+    "追比完赛率",
+    "追比平均时间",
 )
 
 @Composable
@@ -59,9 +59,9 @@ private fun SummaryTable(summary: SimulationSummary) {
         val scrollState = rememberScrollState()
         val tableData = buildList {
             add(tableHeader)
-            add(toTableData("全体", summary.allSummary))
-            add(toTableData("最大スパート", summary.spurtSummary))
-            add(toTableData("非最大スパート", summary.notSpurtSummary))
+            add(toTableData("整体", summary.allSummary))
+            add(toTableData("最大冲刺", summary.spurtSummary))
+            add(toTableData("非最大冲刺", summary.notSpurtSummary))
         }
         LinedTable(
             rowCount = 4, columnCount = tableHeader.size,
@@ -113,20 +113,20 @@ private fun SkillTable(summary: SimulationSummary) {
     val tableData = buildList {
         add(
             listOf(
-                "発動数",
-                "発動率",
-                "平均発動位置1",
-                "2回発動率",
-                "平均発動位置2",
-                "序盤発動率",
-                "中盤接続率",
-                "平均中盤接続時間",
-                "中盤発動率",
-                "終盤接続率",
-                "平均終盤接続時間",
-                "終盤発動率",
-                "平均終盤遅延",
-                "速度上昇無効割合",
+                "触发数",
+                "触发率",
+                "平均触发位置1",
+                "二次触发率",
+                "平均触发位置2",
+                "前期触发率",
+                "中期连接率",
+                "中期平均连接时间",
+                "中期触发率",
+                "后期连接率",
+                "后期平均连接时间",
+                "后期触发率",
+                "平均后期延迟",
+                "速度上升无效比例",
             )
         )
         summaries.forEach { add(toTableData(summary.setting, it.second)) }
@@ -152,9 +152,9 @@ private fun SkillTable(summary: SimulationSummary) {
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.Bottom,
     ) {
-        Text("スキル情報")
+        Text("技能信息")
         LabeledCheckbox(calcSp, { calcSp = it }) {
-            Text("SP計算")
+            Text("SP计算")
         }
     }
     Row {
@@ -180,7 +180,7 @@ private fun SkillTable(summary: SimulationSummary) {
         }
         if (calcSp) {
             Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                Text("SP / ヒントLv / 下位", Modifier.padding(4.dp))
+                Text("SP / 折扣Lv / 下位", Modifier.padding(4.dp))
                 summaries.forEachIndexed { index, (_, skill) ->
                     Row(
                         modifier = Modifier.padding(4.dp),
@@ -216,8 +216,8 @@ private fun SkillTable(summary: SimulationSummary) {
             horizontalArrangement = Arrangement.spacedBy(16.dp, Alignment.End),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text("合計SP: ${skillPtList.sum()}")
-            LabeledCheckbox(kire, { kire = it }) { Text("切れ者") }
+            Text("总SP: ${skillPtList.sum()}")
+            LabeledCheckbox(kire, { kire = it }) { Text("切者") }
         }
     }
 }
@@ -253,10 +253,10 @@ private fun toPositionString(setting: RaceSetting, position: Double): String {
     return when {
         position.isNaN() || position.isInfinite() -> ""
         position < setting.phase0Half -> ""
-        position < setting.phase1Start -> "(中盤入り前${(setting.phase1Start - position).roundToInt()}m)"
-        position < setting.phase1Half -> "(中盤開始${(position - setting.phase1Start).roundToInt()}m)"
-        position < setting.phase2Start -> "(終盤入り前${(setting.phase2Start - position).roundToInt()}m)"
-        position < setting.phase2Half -> "(終盤開始${(position - setting.phase2Start).roundToInt()}m)"
-        else -> "(ゴール前${(setting.courseLength - position).roundToInt()}m)"
+        position < setting.phase1Start -> "(中盘前${(setting.phase1Start - position).roundToInt()}m)"
+        position < setting.phase1Half -> "(中盘开始${(position - setting.phase1Start).roundToInt()}m)"
+        position < setting.phase2Start -> "(后期前${(setting.phase2Start - position).roundToInt()}m)"
+        position < setting.phase2Half -> "(后期开始${(position - setting.phase2Start).roundToInt()}m)"
+        else -> "(终点前${(setting.courseLength - position).roundToInt()}m)"
     }
 }
