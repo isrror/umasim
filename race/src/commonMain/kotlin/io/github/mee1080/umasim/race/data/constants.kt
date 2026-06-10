@@ -1,0 +1,523 @@
+/*
+ * Copyright 2023 mee1080
+ *
+ * This file is part of umasim.
+ *
+ * umasim is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * umasim is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with umasim.  If not, see <https://www.gnu.org/licenses/>.
+ */
+/*
+ * This file was ported from uma-clock-emu by Romulus Urakagi Tsai(@urakagi)
+ * https://github.com/urakagi/uma-clock-emu
+ */
+package io.github.mee1080.umasim.race.data
+
+import kotlin.math.min
+
+enum class Distance {
+    SHORT,
+    MILE,
+    MIDDLE,
+    LONG
+}
+
+enum class Style(val value: Int, val text: String) {
+    NIGE(1, "逃げ"),
+    SEN(2, "先行"),
+    SASI(3, "差し"),
+    OI(4, "追込"),
+    OONIGE(1, "大逃げ"),
+}
+
+enum class Surface {
+    TURF,
+    DIRT
+}
+
+enum class Condition(val value: Int, val label: String) {
+    BEST(5, "絶好調"),
+    GOOD(4, "好調"),
+    NORMAL(3, "普通"),
+    BAD(2, "不調"),
+    WORST(1, "絶不調"),
+}
+
+enum class FitRank {
+    S, A, B, C, D, E, F, G,
+    ;
+
+    fun up() = entries.getOrNull(ordinal - 1)
+    fun down() = entries.getOrNull(ordinal + 1)
+}
+
+enum class CourseCondition(val value: Int, val label: String) {
+    GOOD(1, "良"),
+    YAYAOMO(2, "稍重"),
+    OMO(3, "重"),
+    BAD(4, "不良"),
+}
+
+enum class SkillActivateAdjustment(val value: Int, val label: String) {
+    NONE(0, "無"),
+    YES(1, "確定発動"),
+    ALL(2, "全乱数固定"),
+}
+
+enum class RandomPosition(val value: Int, val label: String) {
+    RANDOM(0, "ランダム"),
+    FASTEST(1, "最速"),
+    FAST(2, "1/4"),
+    MIDDLE(3, "中間"),
+    SLOW(4, "3/4"),
+    SLOWEST(5, "最遅"),
+}
+
+enum class PositionKeepMode(val label: String) {
+    APPROXIMATE("近似"),
+    VIRTUAL("仮想ペースメーカー"),
+    SPEED_UP("一定確率でスピードアップ(逃げ)"),
+    NONE("無し"),
+}
+
+const val framePerSecond = 15
+const val secondPerFrame = 1.0 / framePerSecond
+internal const val startSpeed = 3.0
+internal const val maxSpeed = 30.0
+const val courseWidth = 11.25
+const val horseLane = courseWidth / 18.0
+const val laneChangeAcceleration = 0.02 * 1.5
+const val laneChangeAccelerationPerFrame = laneChangeAcceleration / framePerSecond
+
+const val defaultPositionCompetitionRate = 0.8
+const val defaultCompeteFightRate = 0.4
+const val defaultSecureLeadRate = 0.3
+
+/**
+ * やる気->ステータス補正倍率
+ */
+internal val condCoef = mapOf(
+    Condition.BEST to 1.04,
+    Condition.GOOD to 1.02,
+    Condition.NORMAL to 1.0,
+    Condition.BAD to 0.98,
+    Condition.WORST to 0.96,
+)
+
+/**
+ * バ場->バ場状態->スピード補正値
+ */
+internal val surfaceSpeedModify = mapOf(
+    1 to mapOf(
+        1 to 0,
+        2 to 0,
+        3 to 0,
+        4 to -50
+    ),
+    2 to mapOf(
+        1 to 0,
+        2 to 0,
+        3 to 0,
+        4 to -50
+    )
+)
+
+/**
+ * バ場->バ場状態->パワー補正値
+ */
+internal val surfacePowerModify = mapOf(
+    1 to mapOf(
+        1 to 0,
+        2 to -50,
+        3 to -50,
+        4 to -50
+    ),
+    2 to mapOf(
+        1 to -100,
+        2 to -50,
+        3 to -100,
+        4 to -100
+    )
+)
+
+/**
+ * 脚質適性->賢さ補正倍率
+ */
+internal val styleFitCoef = mapOf(
+    FitRank.S to 1.1,
+    FitRank.A to 1.0,
+    FitRank.B to 0.85,
+    FitRank.C to 0.75,
+    FitRank.D to 0.6,
+    FitRank.E to 0.4,
+    FitRank.F to 0.2,
+    FitRank.G to 0.1,
+)
+
+/**
+ * 距離適性->スパート速度補正倍率
+ */
+internal val distanceFitSpeedCoef = mapOf(
+    FitRank.S to 1.05,
+    FitRank.A to 1.0,
+    FitRank.B to 0.9,
+    FitRank.C to 0.8,
+    FitRank.D to 0.6,
+    FitRank.E to 0.4,
+    FitRank.F to 0.2,
+    FitRank.G to 0.1,
+)
+
+/**
+ * 距離適性->加速度補正倍率
+ */
+internal val distanceFitAccelerateCoef = mapOf(
+    FitRank.S to 1.0,
+    FitRank.A to 1.0,
+    FitRank.B to 1.0,
+    FitRank.C to 1.0,
+    FitRank.D to 1.0,
+    FitRank.E to 0.6,
+    FitRank.F to 0.5,
+    FitRank.G to 0.4,
+)
+
+/**
+ * バ場適性->加速度補正倍率
+ */
+internal val surfaceFitAccelerateCoef = mapOf(
+    FitRank.S to 1.05,
+    FitRank.A to 1.0,
+    FitRank.B to 0.9,
+    FitRank.C to 0.8,
+    FitRank.D to 0.7,
+    FitRank.E to 0.5,
+    FitRank.F to 0.3,
+    FitRank.G to 0.1,
+)
+
+/**
+ * 脚質->最大体力補正倍率
+ */
+private val styleSpCoefData = mapOf(
+    Style.NIGE to 0.95,
+    Style.SEN to 0.89,
+    Style.SASI to 1.0,
+    Style.OI to 0.995,
+    Style.OONIGE to 0.86
+)
+
+val Style.styleSpCoef get() = styleSpCoefData[this]!!
+
+/**
+ * 脚質->フェーズ->目標速度補正倍率
+ */
+private val styleSpeedCoefData = mapOf(
+    Style.NIGE to mapOf(
+        -1 to 1.0,
+        0 to 1.0,
+        1 to 0.98,
+        2 to 0.962,
+        3 to 0.962,
+    ),
+    Style.SEN to mapOf(
+        -1 to 0.978,
+        0 to 0.978,
+        1 to 0.991,
+        2 to 0.975,
+        3 to 0.975,
+    ),
+    Style.SASI to mapOf(
+        -1 to 0.938,
+        0 to 0.938,
+        1 to 0.998,
+        2 to 0.994,
+        3 to 0.994,
+    ),
+    Style.OI to mapOf(
+        -1 to 0.931,
+        0 to 0.931,
+        1 to 1.0,
+        2 to 1.0,
+        3 to 1.0,
+    ),
+    Style.OONIGE to mapOf(
+        -1 to 1.063,
+        0 to 1.063,
+        1 to 0.962,
+        2 to 0.95,
+        3 to 0.95,
+    )
+)
+
+val Style.styleSpeedCoef get() = styleSpeedCoefData[this]!!
+
+/**
+ * 脚質->フェーズ->加速度補正倍率
+ */
+private val styleAccelerateCoefData = mapOf(
+    Style.NIGE to mapOf(
+        -1 to 1.0,
+        0 to 1.0,
+        1 to 1.0,
+        2 to 0.996,
+        3 to 0.996
+    ),
+    Style.SEN to mapOf(
+        -1 to 0.985,
+        0 to 0.985,
+        1 to 1.0,
+        2 to 0.996,
+        3 to 0.996
+    ),
+    Style.SASI to mapOf(
+        -1 to 0.975,
+        0 to 0.975,
+        1 to 1.0,
+        2 to 1.0,
+        3 to 1.0
+    ),
+    Style.OI to mapOf(
+        -1 to 0.945,
+        0 to 0.945,
+        1 to 1.0,
+        2 to 0.997,
+        3 to 0.997
+    ),
+    Style.OONIGE to mapOf(
+        -1 to 1.17,
+        0 to 1.17,
+        1 to 0.94,
+        2 to 0.956,
+        3 to 0.956
+    )
+)
+
+val Style.styleAccelerateCoef get() = styleAccelerateCoefData[this]!!
+
+/**
+ * バ場->バ場状態->体力消費補正値
+ */
+internal val spConsumptionCoef = mapOf(
+    1 to mapOf(
+        1 to 1.0,
+        2 to 1.0,
+        3 to 1.02,
+        4 to 1.02
+    ),
+    2 to mapOf(
+        1 to 1.0,
+        2 to 1.0,
+        3 to 1.01,
+        4 to 1.02
+    )
+)
+
+internal val skillLevelValueDefault = listOf(1.0, 1.0, 1.02, 1.04, 1.06, 1.08, 1.1)
+
+internal val skillLevelValueSpeed = listOf(1.0, 1.0, 1.01, 1.04, 1.07, 1.1, 1.13)
+
+internal val skillLevelValueFixed = listOf(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0)
+
+/**
+ * ベース脚質->距離->脚色十分加速度補正倍率
+ */
+internal val conservePowerAccelerationCoef = mapOf(
+    Style.NIGE to mapOf(
+        Distance.SHORT to 1.0,
+        Distance.MILE to 1.0,
+        Distance.MIDDLE to 1.0,
+        Distance.LONG to 1.0,
+    ),
+    Style.SEN to mapOf(
+        Distance.SHORT to 0.7,
+        Distance.MILE to 0.8,
+        Distance.MIDDLE to 0.9,
+        Distance.LONG to 0.9,
+    ),
+    Style.SASI to mapOf(
+        Distance.SHORT to 0.75,
+        Distance.MILE to 0.7,
+        Distance.MIDDLE to 0.875,
+        Distance.LONG to 1.0,
+    ),
+    Style.OI to mapOf(
+        Distance.SHORT to 0.7,
+        Distance.MILE to 0.75,
+        Distance.MIDDLE to 0.86,
+        Distance.LONG to 0.9,
+    ),
+)
+
+/**
+ * 脚色十分持続時間
+ */
+internal const val conservePowerBaseFrame = framePerSecond * 3
+
+/**
+ * 距離->脚色十分時間補正倍率
+ */
+internal val conservePowerTimeCoef = mapOf(
+    Distance.SHORT to 0.45,
+    Distance.MILE to 1.0,
+    Distance.MIDDLE to 0.875,
+    Distance.LONG to 0.8,
+)
+
+/**
+ * 脚質->位置取り調整速度補正倍率
+ */
+internal val positionCompetitionSpeedCoef = mapOf(
+    Style.OONIGE to 0.2,
+    Style.NIGE to 0.8,
+    Style.SEN to 1.0,
+    Style.SASI to 1.0,
+    Style.OI to 1.0,
+)
+
+/**
+ * 脚質->位置取り調整体力消費補正倍率
+ */
+internal val positionCompetitionStaminaCoef = mapOf(
+    Style.OONIGE to 1.5,
+    Style.NIGE to 1.2,
+    Style.SEN to 1.0,
+    Style.SASI to 1.0,
+    Style.OI to 1.0,
+)
+
+/**
+ * 距離->位置取り調整体力消費補正倍率
+ */
+internal fun positionCompetitionDistanceCoef(distance: Int) = when {
+    distance < 1401 -> 0.3
+    distance < 1801 -> 0.3
+    distance < 2101 -> 0.5
+    distance < 2201 -> 0.8
+    distance < 2401 -> 1.0
+    distance < 2601 -> 1.1
+    else -> 1.2
+}
+
+/**
+ * 脚質->リード確保速度補正倍率
+ */
+internal val secureLeadSpeedCoef = mapOf(
+    Style.OONIGE to 0.2,
+    Style.NIGE to 1.0,
+    Style.SEN to 1.0,
+    Style.SASI to 0.8,
+    Style.OI to 0.0,
+)
+
+/**
+ * 脚質->逃げリード確保追加係数
+ */
+internal val secureLeadNigeBoost = mapOf(
+    Style.OONIGE to 7.0,
+    Style.NIGE to 4.0,
+)
+
+/**
+ * 脚質->リード確保体力消費補正倍率
+ */
+internal val secureLeadStaminaCoef = mapOf(
+    Style.OONIGE to 1.2,
+    Style.NIGE to 1.0,
+    Style.SEN to 0.8,
+    Style.SASI to 0.8,
+    Style.OI to 0.0,
+)
+
+/**
+ * 距離->リード確保体力消費補正倍率
+ */
+internal fun secureLeadDistanceCoef(distance: Int) = when {
+    distance < 1401 -> 0.3
+    distance < 1801 -> 0.3
+    distance < 2101 -> 0.5
+    distance < 2201 -> 0.8
+    distance < 2401 -> 1.0
+    distance < 2601 -> 1.1
+    else -> 1.2
+}
+
+/**
+ * 距離->スタミナ勝負補正倍率
+ */
+internal fun staminaLimitBreakDistanceCoef(distance: Int) = when {
+    distance < 2101 -> 0.0
+    distance < 2201 -> 0.5
+    distance < 2401 -> 1.0
+    distance < 2601 -> 1.5
+    else -> 1.8
+}
+
+/**
+ * 作戦->ForceIn加算値
+ */
+internal val forceInFixed = mapOf(
+    Style.OONIGE to 0.02,
+    Style.NIGE to 0.02,
+    Style.SEN to 0.01,
+    Style.SASI to 0.01,
+    Style.OI to 0.03,
+)
+
+val gateNumberToPostNumber = List(19) { gateNumber ->
+    List(19) { gateCount ->
+        if (gateCount > 16) {
+            min((gateNumber + 1) / 2, (gateNumber - gateCount + 26) / 3)
+        } else {
+            min(gateNumber, (gateNumber - gateCount + 17) / 2)
+        }
+    }
+}
+
+enum class PositionKeepState(val label: String) {
+    NONE("なし"),
+    SPEED_UP("スピードアップ"),
+    OVERTAKE("追い越し"),
+    PACE_UP("ペースアップ"),
+    PACE_DOWN("ペースダウン"),
+    PACE_UP_EX("ペースアップEx"),
+}
+
+/**
+ * 脚質->フェーズ->賢さスキル強化倍率
+ */
+val styleWisdomSkillBuffData = mapOf(
+    Style.NIGE to listOf(0.26, 0.23, 0.19, 0.16),
+    Style.SEN to listOf(0.21, 0.21, 0.21, 0.21),
+    Style.SASI to listOf(0.19, 0.18, 0.23, 0.24),
+    Style.OI to listOf(0.15, 0.17, 0.25, 0.27),
+)
+
+fun getWisdomSkillBuff(wisdom: Int, baseStyle: Style): Map<Int, Double> {
+    val base = calcBaseWisdomSkillBuff(wisdom)
+    return styleWisdomSkillBuffData[baseStyle]!!.mapIndexed { phase, rate ->
+        phase to base * rate
+    }.toMap()
+}
+
+fun calcBaseWisdomSkillBuff(wisdom: Int): Double {
+    var result = 0.0
+    if (wisdom <= 1220) return result
+    result += (min(wisdom, 1401) - 1201) / 20 * 0.02
+    if (wisdom <= 1420) return result
+    result += (min(wisdom, 1601) - 1401) / 20 * 0.06
+    if (wisdom <= 1620) return result
+    result += (min(wisdom, 2001) - 1601) / 20 * 0.01
+    if (wisdom <= 2100) return result
+    result += (min(wisdom, 3101) - 2001) / 100 * 0.01
+    return result
+}
