@@ -159,9 +159,20 @@ private fun SkillTable(summary: SimulationSummary) {
     }
     Row {
         Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-            Text("", Modifier.padding(4.dp))
+            Box(
+                modifier = Modifier.height(32.dp),
+                contentAlignment = Alignment.CenterStart
+            ) {
+                Text("")
+            }
+
             summaries.forEach {
-                Text(it.first, Modifier.padding(4.dp))
+                Box(
+                    modifier = Modifier.height(32.dp),
+                    contentAlignment = Alignment.CenterStart
+                ) {
+                    Text(it.first)
+                }
             }
         }
         Table(
@@ -180,7 +191,7 @@ private fun SkillTable(summary: SimulationSummary) {
         }
         if (calcSp) {
             Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                Text("SP / 折扣Lv / 下位", Modifier.padding(4.dp))
+                Text(" SP / 折扣Lv / 下位 ", Modifier.padding(4.dp))
                 summaries.forEachIndexed { index, (_, skill) ->
                     Row(
                         modifier = Modifier.padding(4.dp),
