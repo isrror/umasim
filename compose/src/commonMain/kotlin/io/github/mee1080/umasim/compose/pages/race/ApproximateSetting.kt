@@ -116,10 +116,10 @@ fun ApproximateSetting(state: AppState, dispatch: OperationDispatcher<AppState>)
         }
 
         Column {
-            Text("跑线", style = MaterialTheme.typography.titleLarge)
+            Text("走位", style = MaterialTheme.typography.titleLarge)
             Text("超车模式判定和横向阻挡造成的停移，均采用近似处理（见技能发动部分）")
             Text("处于超车模式时，会在内栏外侧空出一个身位行进")
-            Text("当发动目标速度或当前速度类技能时，会按“速度技能发动时跑线移动率”的概率向外移动一个身位")
+            Text("当发动目标速度或当前速度类技能时，会按“速度技能发动时走位移动率”的概率向外移动一个身位")
             Text("外绕损耗按所有弯道均为 90 度来计算（以后想做更精确的计算）")
         }
 

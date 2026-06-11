@@ -149,7 +149,7 @@ val approximateConditions = mapOf(
         listOf(-1 to 0.2, 1 to 0.2)
     ),
     "overtake" to ApproximateMultiCondition(
-        "超车模式（电光石火等多种技能，也影响跑线移动）",
+        "超车模式（电光石火等多种技能，也影响横向移动）",
         listOf(
             ApproximateStartContinue("逃跑", 0.05, 0.50) to {
                 it.setting.basicRunningStyle == Style.NIGE
@@ -174,7 +174,7 @@ val approximateConditions = mapOf(
     "blocked_side" to ApproximateMultiCondition(
         "横向阻挡（花蕾等）",
         listOf(
-            ApproximateStartContinue("前 1/4 之后且跑线在外侧", 0.0, 0.0) to {
+            ApproximateStartContinue("前 1/4 之后且走位在外侧", 0.0, 0.0) to {
                 it.currentSection in 1..3 && it.simulation.currentLane > 3.0 * horseLane
             },
             ApproximateStartContinue("除上述以外的前期", 0.1, 0.85) to {

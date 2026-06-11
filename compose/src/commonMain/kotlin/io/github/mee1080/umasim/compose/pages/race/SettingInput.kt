@@ -60,7 +60,7 @@ private fun OtherSetting(state: AppState, dispatch: OperationDispatcher<AppState
         }
         Column {
             val intValue = (state.systemSetting.skillLaneChangeRate * 100).toInt()
-            Text("速度技能发动时跑线移动率： $intValue %")
+            Text("速度技能发动时走位移动率： $intValue %")
             Slider(
                 value = intValue.toFloat(),
                 onValueChange = { dispatch(setSkillLaneChangeRate(it / 100.0)) },

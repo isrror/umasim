@@ -240,7 +240,7 @@ data class GraphSkill(
                     appendLine("加速度：${operating.acceleration.roundToString(2)}")
                 }
                 if (operating.laneChangeSpeed > 0.0) {
-                    appendLine("跑线移动速度：${operating.laneChangeSpeed.roundToString(2)}")
+                    appendLine("走位移动速度：${operating.laneChangeSpeed.roundToString(2)}")
                 }
                 if (operating.duration > 0.0) {
                     appendLine("持续时间：${operating.duration.roundToString(2)}")

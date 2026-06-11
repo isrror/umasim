@@ -40,7 +40,7 @@ fun GraphOutput(state: AppState, dispatch: OperationDispatcher<AppState>) {
 private val defaultLegends = listOf(
     "速度" to Color.Blue,
     "耐力" to Color(255, 128, 100),
-    "跑线" to Color.Green,
+    "走位" to Color.Green,
 )
 
 private val virtualLegends = defaultLegends + listOf(
