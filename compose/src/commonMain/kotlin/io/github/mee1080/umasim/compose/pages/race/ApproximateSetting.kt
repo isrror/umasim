@@ -177,8 +177,8 @@ fun ApproximateSetting(state: AppState, dispatch: OperationDispatcher<AppState>)
 
         Column {
             Text("确保领先", style = MaterialTheme.typography.titleLarge)
-            Text("除追跑外，会按 ${systemSetting.secureLeadRate.toPercentString()} 的概率触发")
-            Text("当自身跑法为逃跑、位置保持模式为虚拟配速马，且对手跑法与自身不同的时候，速度上升量会附加倍率")
+            Text("除追马外，会按 ${systemSetting.secureLeadRate.toPercentString()} 的概率触发")
+            Text("当自身跑法为逃、位置保持模式为虚拟配速马，且对手跑法与自身不同的时候，速度上升量会附加倍率")
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Slider(
                     value = (systemSetting.secureLeadRate * 100).toFloat(),

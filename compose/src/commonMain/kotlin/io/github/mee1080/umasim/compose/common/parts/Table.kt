@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
@@ -31,6 +32,7 @@ fun LinedTable(
             val contentColor = MaterialTheme.colorScheme.contentColorFor(background)
             val cellModifier = Modifier
                 .fillMaxWidth()
+                .height(32.dp)      // 新增
                 .background(background)
                 .padding(cellPadding)
             VerticalDivider(Modifier.fillMaxHeight(), borderWidth, borderColor)
@@ -39,7 +41,10 @@ fun LinedTable(
             ) {
                 repeat(rowCount) { row ->
                     HorizontalDivider(Modifier.fillMaxWidth(), borderWidth, borderColor)
-                    Box(cellModifier) {
+                    Box(
+                        modifier = cellModifier,
+                        contentAlignment = Alignment.Center
+                    ) {
                         CompositionLocalProvider(LocalContentColor provides contentColor) {
                             content(row, column)
                         }
@@ -80,6 +85,7 @@ fun Table(
                         Box(
                             Modifier
                                 .fillMaxWidth()
+                                .height(32.dp)  //新增
                                 .background(cellBackground),
                         ) {
                             content(row, col)
