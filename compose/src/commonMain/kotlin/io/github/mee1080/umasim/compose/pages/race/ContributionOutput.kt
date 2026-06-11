@@ -63,18 +63,34 @@ fun ContributionOutput(state: AppState) {
         Text(state.simulationMode.label, style = MaterialTheme.typography.headlineSmall)
         Row {
             Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                Text("", Modifier.padding(4.dp))
+
+                Box(
+                    modifier = Modifier.height(32.dp),
+                    contentAlignment = Alignment.CenterStart,
+                ) {
+                    Text("")
+                }
+
                 results.forEach {
-                    if (it.compareName == null) {
-                        Text(it.name, Modifier.padding(4.dp))
-                    } else {
-                        Column(Modifier.padding(horizontal = 4.dp)) {
-                            Text(it.compareName + " ->", style = MaterialTheme.typography.labelSmall)
-                            Text(
-                                it.name,
-                                style = MaterialTheme.typography.labelMedium,
-                                modifier = Modifier.align(Alignment.End),
-                            )
+
+                    Box(
+                        modifier = Modifier.height(32.dp),
+                        contentAlignment = Alignment.CenterStart,
+                    ) {
+                        if (it.compareName == null) {
+                            Text(it.name, Modifier.padding(horizontal = 4.dp))
+                        } else {
+                            Column(Modifier.padding(horizontal = 4.dp)) {
+                                Text(
+                                    it.compareName + " ->",
+                                    style = MaterialTheme.typography.labelSmall,
+                                )
+                                Text(
+                                    it.name,
+                                    style = MaterialTheme.typography.labelMedium,
+                                    modifier = Modifier.align(Alignment.End),
+                                )
+                            }
                         }
                     }
                 }

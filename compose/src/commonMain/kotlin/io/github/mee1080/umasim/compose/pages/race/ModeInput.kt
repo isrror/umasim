@@ -35,11 +35,11 @@ private fun ContributionSetting(state: AppState, dispatch: OperationDispatcher<A
     Column {
         val statusValue = if (state.simulationMode == SimulationMode.CONTRIBUTION) -100 else 100
         listOf(
-            "スピード" to "速度",
-            "スタミナ" to "耐力",
-            "パワー" to "力量",
+            "速度" to "速度",
+            "耐力" to "耐力",
+            "力量" to "力量",
             "根性" to "根性",
-            "賢さ" to "智力",
+            "智力" to "智力",
         ).forEach { (idName, displayName) ->
             val id = "/status_${idName}_$statusValue"
             val text = if (statusValue >= 0) "$displayName+$statusValue" else "$displayName$statusValue"
@@ -48,38 +48,38 @@ private fun ContributionSetting(state: AppState, dispatch: OperationDispatcher<A
         if (state.simulationMode == SimulationMode.CONTRIBUTION) {
             state.setting.umaStatus.surfaceFit.down()?.let {
                 val from = state.setting.umaStatus.surfaceFit
-                val id = "/fit_バ場_${from.ordinal}_${it.ordinal}"
+                val id = "/fit_场地_${from.ordinal}_${it.ordinal}"
                 val text = "场地 ${from.name}->${it.name}"
                 ContributionSettingEntry(state.contributionTargets, dispatch, id, text)
             }
             state.setting.umaStatus.distanceFit.down()?.let {
                 val from = state.setting.umaStatus.distanceFit
-                val id = "/fit_距離_${from.ordinal}_${it.ordinal}"
+                val id = "/fit_距离_${from.ordinal}_${it.ordinal}"
                 val text = "距离 ${from.name}->${it.name}"
                 ContributionSettingEntry(state.contributionTargets, dispatch, id, text)
             }
             state.setting.umaStatus.styleFit.down()?.let {
                 val from = state.setting.umaStatus.styleFit
-                val id = "/fit_脚質_${from.ordinal}_${it.ordinal}"
+                val id = "/fit_跑法_${from.ordinal}_${it.ordinal}"
                 val text = "跑法 ${from.name}->${it.name}"
                 ContributionSettingEntry(state.contributionTargets, dispatch, id, text)
             }
         } else {
             state.setting.umaStatus.surfaceFit.up()?.let {
                 val from = state.setting.umaStatus.surfaceFit
-                val id = "/fit_バ場_${from.ordinal}_${it.ordinal}"
+                val id = "/fit_场地_${from.ordinal}_${it.ordinal}"
                 val text = "场地 ${from.name}->${it.name}"
                 ContributionSettingEntry(state.contributionTargets, dispatch, id, text)
             }
             state.setting.umaStatus.distanceFit.up()?.let {
                 val from = state.setting.umaStatus.distanceFit
-                val id = "/fit_距離_${from.ordinal}_${it.ordinal}"
+                val id = "/fit_距离_${from.ordinal}_${it.ordinal}"
                 val text = "距离 ${from.name}->${it.name}"
                 ContributionSettingEntry(state.contributionTargets, dispatch, id, text)
             }
             state.setting.umaStatus.styleFit.up()?.let {
                 val from = state.setting.umaStatus.styleFit
-                val id = "/fit_脚質_${from.ordinal}_${it.ordinal}"
+                val id = "/fit_跑法_${from.ordinal}_${it.ordinal}"
                 val text = "跑法 ${from.name}->${it.name}"
                 ContributionSettingEntry(state.contributionTargets, dispatch, id, text)
             }
