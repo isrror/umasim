@@ -51,7 +51,7 @@ fun ApproximateSetting(state: AppState, dispatch: OperationDispatcher<AppState>)
             )
             when (positionKeepMode) {
                 PositionKeepMode.APPROXIMATE -> {
-                    Text("在以下区间进入减速模式")
+                    Text("在以下区间进入放缓模式")
                     Text("即使处于焦躁状态也会触发（因为位置固定）")
                     Text("逃跑跑法的各模式，以及加速模式，尚未实现")
                     Text(

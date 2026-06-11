@@ -143,143 +143,44 @@ class ApproximateNone(
 }
 
 val approximateConditions = mapOf(
+    // "move_lane" to ApproximateStartContinue("横移動(軽やかステップなど)", 0.1, 0.1),
     "move_lane" to ApproximateStartContinue("横向移动（轻快步伐等）", 0.1, 0.1),
-    "change_order_onetime" to ApproximateRandomRates(
-        "超车/被超车（振作起来等多种技能）",
-        listOf(-1 to 0.2, 1 to 0.2)
-    ),
-    "overtake" to ApproximateMultiCondition(
-        "超车模式（电光石火等多种技能，也影响横向移动）",
-        listOf(
-            ApproximateStartContinue("逃跑", 0.05, 0.50) to {
-                it.setting.basicRunningStyle == Style.NIGE
-            },
-            ApproximateStartContinue("先行", 0.15, 0.55) to {
-                it.setting.basicRunningStyle == Style.SEN
-            },
-            ApproximateStartContinue("其他", 0.20, 0.60) to null,
-        )
-    ),
-    "overtaken" to ApproximateMultiCondition(
-        "被逼近（胜利的执念等）",
-        listOf(
-            ApproximateStartContinue("逃跑/先行", 0.30, 0.70) to {
-                val basicRunningStyle = it.setting.basicRunningStyle
-                basicRunningStyle == Style.NIGE || basicRunningStyle == Style.SEN
-            },
-            ApproximateStartContinue("差/追", 0.15, 0.50) to null,
-        ),
-    ),
-    "blocked_front" to ApproximateStartContinue("前方阻挡（钢之意志等）", 0.07, 0.50),
-    "blocked_side" to ApproximateMultiCondition(
-        "横向阻挡（花蕾等）",
-        listOf(
-            ApproximateStartContinue("前 1/4 之后且走位在外侧", 0.0, 0.0) to {
-                it.currentSection in 1..3 && it.simulation.currentLane > 3.0 * horseLane
-            },
-            ApproximateStartContinue("除上述以外的前期", 0.1, 0.85) to {
-                it.currentPhase <= 0
-            },
-            ApproximateStartContinue("中期", 0.08, 0.75) to {
-                it.currentPhase == 1
-            },
-            ApproximateStartContinue("后期", 0.07, 0.50) to null,
-        ),
-        valueOnStart = 1,
-    ),
-    "infront_near_lane" to ApproximateMultiCondition(
-        "前方有赛马娘（Non-stop 等）",
-        listOf(
-            ApproximateStartContinue("前期", 0.05, 0.50) to {
-                it.currentPhase <= 0
-            },
-            ApproximateStartContinue("中期", 0.10, 0.50) to {
-                it.currentPhase == 1
-            },
-            ApproximateStartContinue("后期最终弯前", 0.20, 0.30) to {
-                !it.isAfterFinalCorner
-            },
-            ApproximateStartContinue("后期最终弯后", 0.07, 0.40) to null,
-        ),
-    ),
-    "behind_near_lane" to ApproximateStartContinue("后方有赛马娘（お先等）", 0.15, 0.50),
-    "behind_near_lane_time_set1" to ApproximateStartContinue("稍微拉开时（ヴォードヴィル）", 0.20, 0.60),
-    "near_count" to ApproximateMultiCondition(
-        "附近赛马娘人数（多种相关技能）",
-        listOf(
-            ApproximateRandomRates("前期", listOf(1 to 0.1, 2 to 0.2, 3 to 0.3, 4 to 0.2, 5 to 0.1)) to {
-                it.currentPhase <= 0
-            },
-            ApproximateRandomRates("中期", listOf(1 to 0.3, 2 to 0.2, 3 to 0.1)) to {
-                it.currentPhase == 1
-            },
-            ApproximateRandomRates("后期", listOf(1 to 0.3, 2 to 0.3, 3 to 0.2)) to null,
-        ),
-    ),
-    "near_infront_count" to ApproximateRandomRates("前方附近的赛马娘人数", listOf(1 to 0.05)),
-    "is_surrounded" to ApproximateStartContinue("周围有赛马娘（どこ吹く風等）", 0.05, 0.40),
-    "temptation_opponent_count_behind" to ApproximateStartContinue(
-        "后方赛马娘焦躁（Trick & Treat 等，仅反映自身效果）",
-        0.07, 0.20,
-    ),
-    "is_other_character_activate_advantage_skill22" to ApproximateMultiCondition(
-        "其他赛马娘发动速度技能（后发制人等）",
-        listOf(
-            ApproximateRandomRates("前期", listOf(1 to 0.1)) to {
-                it.currentPhase <= 0
-            },
-            ApproximateRandomRates("中期", listOf(1 to 0.15)) to {
-                it.currentPhase == 1
-            },
-            ApproximateRandomRates("后期", listOf(1 to 0.2)) to null,
-        )
-    ),
-    "is_other_character_activate_advantage_skill31" to ApproximateMultiCondition(
-        "其他赛马娘发动加速技能（トランセンド固有）",
-        listOf(
-            ApproximateRandomRates("前期", listOf(1 to 0.9)) to {
-                it.currentPhase <= 0
-            },
-            ApproximateRandomRates("中期前半", listOf(1 to 0.01)) to {
-                it.simulation.position in it.setting.phase1Start..it.setting.phase1Half
-            },
-            ApproximateRandomRates("中期后半", listOf(1 to 0.05)) to {
-                it.currentPhase == 1
-            },
-            ApproximateRandomRates("后期", listOf(1 to 0.9)) to null,
-        )
-    ),
-    "change_order_up_middle" to ApproximateMultiCondition(
-        "中期超车（クラウン固有 / 嫁アマ固有等）",
-        listOf(
-            ApproximateCountUp("中期", 0.05) to {
-                it.currentPhase == 1
-            },
-            ApproximateNone("其他") to null,
-        )
-    ),
-    "change_order_up_end_after" to ApproximateMultiCondition(
-        "終盤追い抜き(ルドルフ固有/デジタル固有など)",
-        listOf(
-            ApproximateCountUp("終盤", 0.15) to {
-                it.currentPhase >= 2
-            },
-            ApproximateNone("その他") to null,
-        )
-    ),
-    "change_order_up_finalcorner_after" to ApproximateMultiCondition(
-        "最終コーナー以降追い抜き(チョコフラッシュ固有)",
-        listOf(
-            ApproximateCountUp("最終コーナー以降", 0.15) to {
-                it.isAfterFinalCorner
-            },
-            ApproximateNone("その他") to null,
-        )
-    ),
-    "overtake_target_no_order_up_time" to ApproximateStartContinue(
-        "追い抜き対象ウマ娘順位変動なし(絶ボク、追い抜きモード条件と同時設定されるためこちらの条件は緩め)",
-        0.80, 0.60,
-    ),
+    // "change_order_onetime" to ApproximateRandomRates("追い抜き/追い抜かれ(アガッてきたなど多数)", listOf(-1 to 0.2, 1 to 0.2)),
+    "change_order_onetime" to ApproximateRandomRates("超越/被超越（如：追上去等）", listOf(-1 to 0.2, 1 to 0.2)),
+    // "overtake" to ApproximateMultiCondition("追い抜きモード(電光石火など多数、レーン移動にも影響)", listOf(ApproximateStartContinue("逃げ", 0.05, 0.50) to { it.setting.basicRunningStyle == Style.NIGE }, ApproximateStartContinue("先行", 0.15, 0.55) to { it.setting.basicRunningStyle == Style.SEN }, ApproximateStartContinue("その他", 0.20, 0.60) to null)),
+    "overtake" to ApproximateMultiCondition("超越模式（如：电光石火等，影响赛道移动）", listOf(ApproximateStartContinue("领跑", 0.05, 0.50) to { it.setting.basicRunningStyle == Style.NIGE }, ApproximateStartContinue("先行", 0.15, 0.55) to { it.setting.basicRunningStyle == Style.SEN }, ApproximateStartContinue("其他", 0.20, 0.60) to null)),
+    // "overtaken" to ApproximateMultiCondition("詰め寄られ(勝利への執念など)", listOf(ApproximateStartContinue("逃げ/先行", 0.30, 0.70) to { it.setting.basicRunningStyle == Style.NIGE || it.setting.basicRunningStyle == Style.SEN }, ApproximateStartContinue("差し/追込", 0.15, 0.50) to null)),
+    "overtaken" to ApproximateMultiCondition("被逼近（如：对胜利的执著等）", listOf(ApproximateStartContinue("领跑/先行", 0.30, 0.70) to { it.setting.basicRunningStyle == Style.NIGE || it.setting.basicRunningStyle == Style.SEN }, ApproximateStartContinue("居中/后追", 0.15, 0.50) to null)),
+    // "blocked_front" to ApproximateStartContinue("前方ブロック(鋼の意志など)", 0.07, 0.50),
+    "blocked_front" to ApproximateStartContinue("前方阻挡（如：钢铁意志等）", 0.07, 0.50),
+    // "blocked_side" to ApproximateMultiCondition("横ブロック(つぼみなど)", listOf(ApproximateStartContinue("序盤1/4以降かつ走行レーンが外側", 0.0, 0.0) to { it.currentSection in 1..3 && it.simulation.currentLane > 3.0 * horseLane }, ApproximateStartContinue("上記以外の序盤", 0.1, 0.85) to { it.currentPhase == 0 }, ApproximateStartContinue("中盤", 0.08, 0.75) to { it.currentPhase == 1 }, ApproximateStartContinue("終盤", 0.07, 0.50) to null), valueOnStart = 1),
+    "blocked_side" to ApproximateMultiCondition("横向阻挡（如：花苞绽放之时等）", listOf(ApproximateStartContinue("比赛初期1/4之后且赛道在外侧", 0.0, 0.0) to { it.currentSection in 1..3 && it.simulation.currentLane > 3.0 * horseLane }, ApproximateStartContinue("比赛初期（除上述外）", 0.1, 0.85) to { it.currentPhase == 0 }, ApproximateStartContinue("比赛中期", 0.08, 0.75) to { it.currentPhase == 1 }, ApproximateStartContinue("比赛后期", 0.07, 0.50) to null), valueOnStart = 1),
+    // "infront_near_lane" to ApproximateMultiCondition("前にウマ娘(ノンストなど)", listOf(ApproximateStartContinue("序盤", 0.05, 0.50) to { it.currentPhase == 0 }, ApproximateStartContinue("中盤", 0.10, 0.50) to { it.currentPhase == 1 }, ApproximateStartContinue("終盤最終コーナー前", 0.20, 0.30) to { !it.isAfterFinalCorner }, ApproximateStartContinue("終盤最終コーナー後", 0.07, 0.40) to null)),
+    "infront_near_lane" to ApproximateMultiCondition("前方有马娘（如：不停顿女孩等）", listOf(ApproximateStartContinue("比赛初期", 0.05, 0.50) to { it.currentPhase == 0 }, ApproximateStartContinue("比赛中期", 0.10, 0.50) to { it.currentPhase == 1 }, ApproximateStartContinue("比赛后期最终弯道前", 0.20, 0.30) to { !it.isAfterFinalCorner }, ApproximateStartContinue("比赛后期最终弯道后", 0.07, 0.40) to null)),
+    // "behind_near_lane" to ApproximateStartContinue("後にウマ娘(お先など)", 0.15, 0.50),
+    "behind_near_lane" to ApproximateStartContinue("后方有马娘（如：我先失陪等）", 0.15, 0.50),
+    // "behind_near_lane_time_set1" to ApproximateStartContinue("少し開いた時(ヴォードヴィル)", 0.20, 0.60),
+    "behind_near_lane_time_set1" to ApproximateStartContinue("稍稍拉开距离时（如：富士固有等）", 0.20, 0.60),
+    // "near_count" to ApproximateMultiCondition("近くのウマ娘人数(ウマ好み/ワクワククライマックスなど)", listOf(ApproximateRandomRates("序盤", listOf(1 to 0.1, 2 to 0.2, 3 to 0.3, 4 to 0.2, 5 to 0.1)) to { it.currentPhase == 0 }, ApproximateRandomRates("中盤", listOf(1 to 0.3, 2 to 0.2, 3 to 0.1)) to { it.currentPhase == 1 }, ApproximateRandomRates("終盤", listOf(1 to 0.3, 2 to 0.3, 3 to 0.2)) to null)),
+    "near_count" to ApproximateMultiCondition("附近马娘人数（如：喜爱赛马娘/雀跃不已的精彩时刻等）", listOf(ApproximateRandomRates("比赛初期", listOf(1 to 0.1, 2 to 0.2, 3 to 0.3, 4 to 0.2, 5 to 0.1)) to { it.currentPhase == 0 }, ApproximateRandomRates("比赛中期", listOf(1 to 0.3, 2 to 0.2, 3 to 0.1)) to { it.currentPhase == 1 }, ApproximateRandomRates("比赛后期", listOf(1 to 0.3, 2 to 0.3, 3 to 0.2)) to null)),
+    // "near_infront_count" to ApproximateRandomRates("前方近くのウマ娘人数(無二/無三)", listOf(1 to 0.05)),
+    "near_infront_count" to ApproximateRandomRates("前方附近马娘人数（如：无二/无三 金镇之光的技能等）", listOf(1 to 0.05)),
+    // "is_surrounded" to ApproximateStartContinue("周囲にウマ娘(どこ吹く風など)", 0.05, 0.40),
+    "is_surrounded" to ApproximateStartContinue("周围有马娘（如：充耳不闻等）", 0.05, 0.40),
+    // "temptation_opponent_count_behind" to ApproximateStartContinue("後ろのウマ娘掛かり(トリック&トリートなど、自身への効果のみ反映)", 0.07, 0.20),
+    "temptation_opponent_count_behind" to ApproximateStartContinue("后方马娘施加影响（如：要糖也要捣蛋等，仅反映自身效果）", 0.07, 0.20),
+    // "is_other_character_activate_advantage_skill22" to ApproximateMultiCondition("他のウマ娘が速度スキル発動(後の先など)", listOf(ApproximateRandomRates("序盤", listOf(1 to 0.1)) to { it.currentPhase == 0 }, ApproximateRandomRates("中盤", listOf(1 to 0.15)) to { it.currentPhase == 1 }, ApproximateRandomRates("終盤", listOf(1 to 0.2)) to null)),
+    "is_other_character_activate_advantage_skill22" to ApproximateMultiCondition("其他马娘发动速度技能（如：后发制人等）", listOf(ApproximateRandomRates("比赛初期", listOf(1 to 0.1)) to { it.currentPhase == 0 }, ApproximateRandomRates("比赛中期", listOf(1 to 0.15)) to { it.currentPhase == 1 }, ApproximateRandomRates("比赛后期", listOf(1 to 0.2)) to null)),
+    // "is_other_character_activate_advantage_skill31" to ApproximateMultiCondition("他のウマ娘が加速スキル発動(トランセンド固有)", listOf(ApproximateRandomRates("序盤", listOf(1 to 0.9)) to { it.currentPhase == 0 }, ApproximateRandomRates("中盤前半", listOf(1 to 0.01)) to { it.simulation.position in it.setting.phase1Start..it.setting.phase1Half }, ApproximateRandomRates("中盤後半", listOf(1 to 0.05)) to { it.currentPhase == 1 }, ApproximateRandomRates("終盤", listOf(1 to 0.9)) to null)),
+    "is_other_character_activate_advantage_skill31" to ApproximateMultiCondition("其他马娘发动加速技能（如：创升固有）", listOf(ApproximateRandomRates("比赛初期", listOf(1 to 0.9)) to { it.currentPhase == 0 }, ApproximateRandomRates("比赛中期前半", listOf(1 to 0.01)) to { it.simulation.position in it.setting.phase1Start..it.setting.phase1Half }, ApproximateRandomRates("比赛中期后半", listOf(1 to 0.05)) to { it.currentPhase == 1 }, ApproximateRandomRates("比赛后期", listOf(1 to 0.9)) to null)),
+    // "change_order_up_middle" to ApproximateMultiCondition("中盤追い抜き(クラウン固有/嫁アマ固有など)", listOf(ApproximateCountUp("中盤", 0.05) to { it.currentPhase == 1 }, ApproximateNone("その他") to null)),
+    "change_order_up_middle" to ApproximateMultiCondition("比赛中期超越（如：皇冠固有/花嫁亚马逊固有等）", listOf(ApproximateCountUp("比赛中期", 0.05) to { it.currentPhase == 1 }, ApproximateNone("其他") to null)),
+    // "change_order_up_end_after" to ApproximateMultiCondition("終盤追い抜き(ルドルフ固有/デジタル固有など)", listOf(ApproximateCountUp("終盤", 0.15) to { it.currentPhase >= 2 }, ApproximateNone("その他") to null)),
+    "change_order_up_end_after" to ApproximateMultiCondition("比赛后期超越（如：鲁道夫固有/数码固有等）", listOf(ApproximateCountUp("比赛后期", 0.15) to { it.currentPhase >= 2 }, ApproximateNone("其他") to null)),
+    // "change_order_up_finalcorner_after" to ApproximateMultiCondition("最終コーナー以降追い抜き(チョコフラッシュ固有)", listOf(ApproximateCountUp("最終コーナー以降", 0.15) to { it.isAfterFinalCorner }, ApproximateNone("その他") to null)),
+    "change_order_up_finalcorner_after" to ApproximateMultiCondition("最终弯道后超越（如：情人节荣进闪耀固有）", listOf(ApproximateCountUp("最终弯道后", 0.15) to { it.isAfterFinalCorner }, ApproximateNone("其他") to null)),
+    // "overtake_target_no_order_up_time" to ApproximateStartContinue("追い抜き対象ウマ娘順位変動なし(絶ボク、追い抜きモード条件と同時設定されるためこちらの条件は緩め)", 0.80, 0.60),
+    "overtake_target_no_order_up_time" to ApproximateStartContinue("超越目标马娘排名无变动（如：绝对领先，与超越模式条件同时设定因此条件宽松）", 0.80, 0.60),
 )
 
 val approximateTypeToState = mapOf(
@@ -304,56 +205,97 @@ val approximateTypeToState = mapOf(
 )
 
 val ignoreConditions = mapOf(
-    "grade" to "GI条件は無視",
-    "time" to "ナイター条件は無視",
-    "season" to "季節条件は無視",
-    "weather" to "天候条件は無視",
-    "is_dirtgrade" to "交流重賞条件はレース場のみ判定、重賞かどうかは無視",
-    "fan_count" to "ファン数条件は無視",
+    // "grade" to "GI条件は無視",
+    "grade" to "忽略GI条件",
+    // "time" to "ナイター条件は無視",
+    "time" to "忽略夜间比赛条件",
+    // "season" to "季節条件は無視",
+    "season" to "忽略季节条件",
+    // "weather" to "天候条件は無視",
+    "weather" to "忽略天气条件",
+    // "is_dirtgrade" to "交流重賞条件はレース場のみ判定、重賞かどうかは無視",
+    "is_dirtgrade" to "交流重赏条件仅判断赛场，忽略是否重赏",
+    // "fan_count" to "ファン数条件は無視",
+    "fan_count" to "忽略粉丝数条件",
 
-    "order" to "順位条件は無視",
-    "order_rate" to "順位条件は無視",
-    "order_rate_in10_continue" to "順位条件は無視",
-    "order_rate_in20_continue" to "順位条件は無視",
-    "order_rate_in30_continue" to "順位条件は無視",
-    "order_rate_in40_continue" to "順位条件は無視",
-    "order_rate_in50_continue" to "順位条件は無視",
-    "order_rate_in60_continue" to "順位条件は無視",
-    "order_rate_in70_continue" to "順位条件は無視",
-    "order_rate_in80_continue" to "順位条件は無視",
-    "order_rate_in90_continue" to "順位条件は無視",
-    "order_rate_out10_continue" to "順位条件は無視",
-    "order_rate_out20_continue" to "順位条件は無視",
-    "order_rate_out30_continue" to "順位条件は無視",
-    "order_rate_out40_continue" to "順位条件は無視",
-    "order_rate_out50_continue" to "順位条件は無視",
-    "order_rate_out60_continue" to "順位条件は無視",
-    "order_rate_out70_continue" to "順位条件は無視",
-    "order_rate_out80_continue" to "順位条件は無視",
-    "order_rate_out90_continue" to "順位条件は無視",
+    // "order" to "順位条件は無視",
+    "order" to "忽略排名条件",
+    // "order_rate" to "順位条件は無視",
+    "order_rate" to "忽略排名条件",
+    // "order_rate_in10_continue" to "順位条件は無視",
+    "order_rate_in10_continue" to "忽略排名条件",
+    // "order_rate_in20_continue" to "順位条件は無視",
+    "order_rate_in20_continue" to "忽略排名条件",
+    // "order_rate_in30_continue" to "順位条件は無視",
+    "order_rate_in30_continue" to "忽略排名条件",
+    // "order_rate_in40_continue" to "順位条件は無視",
+    "order_rate_in40_continue" to "忽略排名条件",
+    // "order_rate_in50_continue" to "順位条件は無視",
+    "order_rate_in50_continue" to "忽略排名条件",
+    // "order_rate_in60_continue" to "順位条件は無視",
+    "order_rate_in60_continue" to "忽略排名条件",
+    // "order_rate_in70_continue" to "順位条件は無視",
+    "order_rate_in70_continue" to "忽略排名条件",
+    // "order_rate_in80_continue" to "順位条件は無視",
+    "order_rate_in80_continue" to "忽略排名条件",
+    // "order_rate_in90_continue" to "順位条件は無視",
+    "order_rate_in90_continue" to "忽略排名条件",
+    // "order_rate_out10_continue" to "順位条件は無視",
+    "order_rate_out10_continue" to "忽略排名条件",
+    // "order_rate_out20_continue" to "順位条件は無視",
+    "order_rate_out20_continue" to "忽略排名条件",
+    // "order_rate_out30_continue" to "順位条件は無視",
+    "order_rate_out30_continue" to "忽略排名条件",
+    // "order_rate_out40_continue" to "順位条件は無視",
+    "order_rate_out40_continue" to "忽略排名条件",
+    // "order_rate_out50_continue" to "順位条件は無視",
+    "order_rate_out50_continue" to "忽略排名条件",
+    // "order_rate_out60_continue" to "順位条件は無視",
+    "order_rate_out60_continue" to "忽略排名条件",
+    // "order_rate_out70_continue" to "順位条件は無視",
+    "order_rate_out70_continue" to "忽略排名条件",
+    // "order_rate_out80_continue" to "順位条件は無視",
+    "order_rate_out80_continue" to "忽略排名条件",
+    // "order_rate_out90_continue" to "順位条件は無視",
+    "order_rate_out90_continue" to "忽略排名条件",
 
-    "distance_diff_rate" to "相対位置条件は無視",
+    // "distance_diff_rate" to "相対位置条件は無視",
+    "distance_diff_rate" to "忽略相对位置条件",
 
-    "bashin_diff_infront" to "他のウマ娘との距離条件は無視",
-    "bashin_diff_behind" to "他のウマ娘との距離条件は無視",
-    "distance_diff_top" to "他のウマ娘との距離条件は無視",
-    "distance_diff_top_float" to "他のウマ娘との距離条件は無視",
+    // "bashin_diff_infront" to "他のウマ娘との距離条件は無視",
+    "bashin_diff_infront" to "忽略与其他马娘的距离条件",
+    // "bashin_diff_behind" to "他のウマ娘との距離条件は無視",
+    "bashin_diff_behind" to "忽略与其他马娘的距离条件",
+    // "distance_diff_top" to "他のウマ娘との距離条件は無視",
+    "distance_diff_top" to "忽略与其他马娘的距离条件",
+    // "distance_diff_top_float" to "他のウマ娘との距離条件は無視",
+    "distance_diff_top_float" to "忽略与其他马娘的距离条件",
 
-    "same_skill_horse_count" to "他のウマ娘のスキル条件は無視",
-    "is_exist_skill_id" to "他のウマ娘のスキル条件は無視",
+    // "same_skill_horse_count" to "他のウマ娘のスキル条件は無視",
+    "same_skill_horse_count" to "忽略其他马娘的技能条件",
+    // "is_exist_skill_id" to "他のウマ娘のスキル条件は無視",
+    "is_exist_skill_id" to "忽略其他马娘的技能条件",
 
-    "is_behind_in" to "内外条件は無視",
-    "lane_type" to "内外条件は無視",
+    // "is_behind_in" to "内外条件は無視",
+    "is_behind_in" to "忽略内外条件",
+    // "lane_type" to "内外条件は無視",
+    "lane_type" to "忽略内外条件",
 
-    "running_style_equal_popularity_one" to "他のウマ娘の作戦条件は無視",
-    "running_style_count_same" to "他のウマ娘の作戦条件は無視",
-    "running_style_count_same_rate" to "他のウマ娘の作戦条件は無視",
+    // "running_style_equal_popularity_one" to "他のウマ娘の作戦条件は無視",
+    "running_style_equal_popularity_one" to "忽略其他马娘的策略条件",
+    // "running_style_count_same" to "他のウマ娘の作戦条件は無視",
+    "running_style_count_same" to "忽略其他马娘的策略条件",
+    // "running_style_count_same_rate" to "他のウマ娘の作戦条件は無視",
+    "running_style_count_same_rate" to "忽略其他马娘的策略条件",
 
-    "visiblehorse" to "視界内のウマ娘条件は満たしている前提",
+    // "visiblehorse" to "視界内のウマ娘条件は満たしている前提",
+    "visiblehorse" to "假设满足视野内马娘条件",
 
-    "activate_count_all_team" to "チームのスキル発動数条件は無視",
+    // "activate_count_all_team" to "チームのスキル発動数条件は無視",
+    "activate_count_all_team" to "忽略队伍技能发动次数条件",
 
-    "fan_count" to "ファン数は満たす前提",
+    // "fan_count" to "ファン数は満たす前提",
+    "fan_count" to "假设粉丝数条件满足",
 )
 
 @Serializable
@@ -411,7 +353,7 @@ data class Invoke(
         return buildSet {
             target.forEach { andConditions ->
                 andConditions.forEach { condition ->
-                    if (approximateTypeToState.containsKey(condition.type)) add("発動条件近似")
+                    if (approximateTypeToState.containsKey(condition.type)) add("近似为发动条件")
                     ignoreConditions[condition.type]?.let { add(it) }
                 }
             }
@@ -597,8 +539,10 @@ data class Invoke(
     private val durationMessage by lazy {
         buildList {
             when (durationSpecial) {
-                2 -> add("先頭との距離は最大（1.6倍）固定")
-                4 -> add("発動直後に2回追い抜く条件で近似")
+                // 2 -> add("先頭との距離は最大（1.6倍）固定")
+                2 -> add("与领先者的距离固定为最大（1.6倍）")
+                // 4 -> add("発動直後に2回追い抜く条件で近似")
+                4 -> add("近似为发动后立即超越2次的条件")
             }
         }
     }
@@ -704,28 +648,46 @@ data class SkillEffect(
     val messages: List<String> by lazy {
         buildList {
             when (special) {
-                3, 4, 5, 6, 7 -> add("チームメンバーのステータス合計条件は最大値前提")
-                10 -> add("勝利数条件は最大値前提")
-                11 -> add("追い抜き回数は2回（1.1倍）固定")
-                12 -> add("ファン数条件は最大値前提")
-                19, 34 -> add("先頭から離れている条件は満たす前提")
-                20 -> add("中盤連続競り合いは4～6秒（3.0倍）固定")
-                24 -> add("海外適性Lv合計は最大値前提")
-                25 -> add("終盤開始までに取ったリードの距離は最大（1.8倍）固定")
-                26 -> add("UAFは全勝前提")
-                27 -> add("お料理Ptは16000以上（1.2倍）前提")
-                28 -> add("総研究Lvは最大前提")
-                30 -> add("ラヴは最大前提")
-                31 -> add("総発展Ptは最大前提（1.2倍）")
-                32 -> add("伝説の宿前提（1.2倍）")
-                37 -> add("チームランクS以上前提（1.2倍）")
+                // 3, 4, 5, 6, 7 -> add("チームメンバーのステータス合計条件は最大値前提")
+                3, 4, 5, 6, 7 -> add("前提是队伍成员状态总和条件为最大值")
+                // 10 -> add("勝利数条件は最大値前提")
+                10 -> add("前提是胜利数条件为最大值")
+                // 11 -> add("追い抜き回数は2回（1.1倍）固定")
+                11 -> add("超越次数固定为2次（1.1倍）")
+                // 12 -> add("ファン数条件は最大値前提")
+                12 -> add("前提是粉丝数条件为最大值")
+                // 19, 34 -> add("先頭から離れている条件は満たす前提")
+                19, 34 -> add("前提是满足远离领先者条件")
+                // 20 -> add("中盤連続競り合いは4～6秒（3.0倍）固定")
+                20 -> add("比赛中期连续竞争固定为4～6秒（3.0倍）")
+                // 24 -> add("海外適性Lv合計は最大値前提")
+                24 -> add("前提是海外适应等级总和为最大值")
+                // 25 -> add("終盤開始までに取ったリードの距離は最大（1.8倍）固定")
+                25 -> add("比赛后期开始前取得的领先距离固定为最大（1.8倍）")
+                // 26 -> add("UAFは全勝前提")
+                26 -> add("前提是UAF全胜")
+                // 27 -> add("お料理Ptは16000以上（1.2倍）前提")
+                27 -> add("前提是料理点数在16000以上（1.2倍）")
+                // 28 -> add("総研究Lvは最大前提")
+                28 -> add("前提是总研究等级最大")
+                // 30 -> add("ラヴは最大前提")
+                30 -> add("前提是Love最大")
+                // 31 -> add("総発展Ptは最大前提（1.2倍）")
+                31 -> add("前提是总发展点数最大（1.2倍）")
+                // 32 -> add("伝説の宿前提（1.2倍）")
+                32 -> add("前提是传说级旅馆（1.2倍）")
+                // 37 -> add("チームランクS以上前提（1.2倍）")
+                37 -> add("前提是队伍等级S以上（1.2倍）")
             }
             when (additional) {
-                2 -> add("同時に別のスキルを2つ発動する条件で近似")
-                3 -> add("同時に別のスキルを1つ発動する条件で近似")
+                // 2 -> add("同時に別のスキルを2つ発動する条件で近似")
+                2 -> add("近似为同时发动2个其他技能的条件")
+                // 3 -> add("同時に別のスキルを1つ発動する条件で近似")
+                3 -> add("近似为同时发动1个其他技能的条件")
             }
             if (type == "fixLane") {
-                add("外方向移動に対する横ブロックは未実装")
+                // add("外方向移動に対する横ブロックは未実装")
+                add("向外移动的横向阻挡未实现")
             }
         }
     }
@@ -766,7 +728,7 @@ data class SkillEffect(
             }
 
             12 -> {
-                // ファンが多いほど効果が高まる（キミと勝ちたい
+                // ファンが多いほど効果が高まる（キミと勝ちたい）
                 value * 1.2
             }
 

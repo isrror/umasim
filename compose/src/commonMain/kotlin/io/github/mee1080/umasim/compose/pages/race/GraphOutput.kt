@@ -178,12 +178,12 @@ private fun GraphArea(state: AppState, graphData: GraphData, dispatch: Operation
                 Text("焦躁")
             }
             LabeledCheckbox(setting.spurting, { dispatch(setGraphDisplaySetting(setting.copy(spurting = it))) }) {
-                Text("最后冲刺")
+                Text("最终冲刺")
             }
             LabeledCheckbox(
                 setting.paceDownMode,
                 { dispatch(setGraphDisplaySetting(setting.copy(paceDownMode = it))) }) {
-                Text("减速模式")
+                Text("放缓模式")
             }
             LabeledCheckbox(
                 setting.downSlopeMode,

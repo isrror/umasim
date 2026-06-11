@@ -1,6 +1,7 @@
 package io.github.mee1080.umasim.compose.common.lib
 
-import io.github.mee1080.umasim.compose.generated.resources.LINESeedJP_OTF_Rg
+// import io.github.mee1080.umasim.compose.generated.resources.LINESeedJP_A_TTF_Rg
+import io.github.mee1080.umasim.compose.generated.resources.SourceHanSansCN_Regular
 import io.github.mee1080.umasim.compose.generated.resources.Res
 import kotlinx.browser.window
 import kotlinx.coroutines.CoroutineScope
@@ -16,7 +17,8 @@ actual val mainDispatcher = Dispatchers.Default.limitedParallelism(1)
 
 actual val asyncDispatcher = Dispatchers.Default
 
-actual val defaultFontResource = Res.font.LINESeedJP_OTF_Rg
+// actual val defaultFontResource = Res.font.LINESeedJP_A_TTF_Rg
+actual val defaultFontResource = Res.font.SourceHanSansCN_Regular
 
 actual val defaultThreadCount = 1
 

@@ -54,4 +54,22 @@ fun Footer() {
         TextWithLink("界面显示使用了「LINE Seed JP」字体（https://seed.line.me/index_jp.html）。")
         Text("\"LINE Seed JP\" is licensed under the SIL Open Font License 1.1 (c) LY Corporation.")
     }
+
+    HorizontalDivider()
+
+    Column {
+        Row { Text("繁中版说明", style = MaterialTheme.typography.headlineSmall) }
+        TextWithLink("本项目原版为 (https://mee1080.github.io/umasim/race/) 翻译主要使用GPT-5.4模型，仅作参考，Logo使用GPT-image2生成")
+        TextWithLink("本项目使用「思源黑体」（https://github.com/adobe-fonts/source-han-sans）")
+        Text("仅作为学习交流使用")
+    }
+
+    HorizontalDivider()
+
+    Column {
+        Row { Text("繁中版更新历史", style = MaterialTheme.typography.headlineSmall) }
+        Text("2025-06-09：新增马娘搜索框")
+        Text("2025-07-13：新增技能发动位置")
+        Text("2026-06-11：日常更新，优化马娘搜索框")
+    }
 }

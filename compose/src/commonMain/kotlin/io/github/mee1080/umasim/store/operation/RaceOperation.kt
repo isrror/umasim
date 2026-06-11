@@ -294,15 +294,15 @@ internal fun toGraphData(
                 }
                 if (displaySetting.temptation) add(
                     setting, frameList, index, raceFrame,
-                    "掛かり"
+                    "爆冲"
                 ) { it.temptation }
                 if (displaySetting.spurting) add(
                     setting, frameList, index, raceFrame,
-                    "ラストスパート"
+                    "最终冲刺"
                 ) { it.spurting }
                 if (displaySetting.paceDownMode) add(
                     setting, frameList, index, raceFrame,
-                    "ペースダウンモード"
+                    "放缓模式"
                 ) { it.positionKeepState == PositionKeepState.PACE_DOWN }
                 if (displaySetting.downSlopeMode) add(
                     setting, frameList, index, raceFrame,
@@ -318,7 +318,7 @@ internal fun toGraphData(
                 ) { it.competeFight }
                 if (displaySetting.conservePower) add(
                     setting, frameList, index, raceFrame,
-                    "脚力十分"
+                    "脚力十足"
                 ) { it.conservePower }
                 if (displaySetting.positionCompetition) add(
                     setting, frameList, index, raceFrame,
@@ -510,11 +510,11 @@ private class ContributionStatus(
     override fun applySetting(setting: RaceSetting): RaceSetting {
         return setting.copy(
             umaStatus = setting.umaStatus.copy(
-                speed = if (target == "スピード") setting.umaStatus.speed + value else setting.umaStatus.speed,
-                stamina = if (target == "スタミナ") setting.umaStatus.stamina + value else setting.umaStatus.stamina,
-                power = if (target == "パワー") setting.umaStatus.power + value else setting.umaStatus.power,
+                speed = if (target == "速度") setting.umaStatus.speed + value else setting.umaStatus.speed,
+                stamina = if (target == "耐力") setting.umaStatus.stamina + value else setting.umaStatus.stamina,
+                power = if (target == "力量") setting.umaStatus.power + value else setting.umaStatus.power,
                 guts = if (target == "根性") setting.umaStatus.guts + value else setting.umaStatus.guts,
-                wisdom = if (target == "賢さ") setting.umaStatus.wisdom + value else setting.umaStatus.wisdom,
+                wisdom = if (target == "智力") setting.umaStatus.wisdom + value else setting.umaStatus.wisdom,
             )
         )
     }
@@ -542,9 +542,9 @@ class ContributionFit(
     override fun applySetting(setting: RaceSetting): RaceSetting {
         return setting.copy(
             umaStatus = setting.umaStatus.copy(
-                surfaceFit = if (target == "バ場") toRank else setting.umaStatus.surfaceFit,
-                distanceFit = if (target == "距離") toRank else setting.umaStatus.distanceFit,
-                styleFit = if (target == "脚質") toRank else setting.umaStatus.styleFit,
+                surfaceFit = if (target == "场地") toRank else setting.umaStatus.surfaceFit,
+                distanceFit = if (target == "距离") toRank else setting.umaStatus.distanceFit,
+                styleFit = if (target == "跑法") toRank else setting.umaStatus.styleFit,
             )
         )
     }
@@ -603,7 +603,7 @@ private suspend fun ActionContext<AppState>.runSimulationContribution(state: App
     } else state.setting
     val baseTimes = calculateState.calculateTimes(baseSetting)
     val baseResult = ContributionResult(
-        name = "基本値",
+        name = "基本值",
         compareName = null,
         averageTime = baseTimes.average(),
         averageDiff = Double.NaN,
@@ -641,7 +641,7 @@ private fun calcContributionResult(
     val lowerTime = times.subList(times.size * 4 / 5, times.size).average()
     return ContributionResult(
         name = name,
-        compareName = if (baseResult.name == "基本値") null else baseResult.name,
+        compareName = if (baseResult.name == "基本值") null else baseResult.name,
         averageTime = averageTime,
         averageDiff = averageTime - baseResult.averageTime,
         upperTime = upperTime,
