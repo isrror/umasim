@@ -1,86 +1,61 @@
 name: Desktop Release
 
-# 手動実行を可能にする (workflow_dispatch)
 on:
   workflow_dispatch:
+    inputs:
+      branch:
+        description: "选择构建分支（如 zh-cn）"
+        required: true
+        default: "zh-cn"
 
-# ジョブのパーミッション設定
 permissions:
   contents: write
 
 jobs:
-  build-and-create-draft-release:
-    # 環境は Windows
+  build-and-create-release:
     runs-on: windows-latest
 
     steps:
-      # 選択されたのがタグであることを確認
-      - name: Check if triggered from a tag
-        # github.ref_type は 'tag' または 'branch'
-        if: github.ref_type != 'tag'
-        run: |
-          echo "Error: This workflow must be triggered by selecting a TAG from the 'Use workflow from' dropdown."
-          echo "Selected ref (${{ github.ref }}) is not a tag."
-          exit 1
-
-      # 1. 選択されたタグのコードをチェックアウト
-      - name: Checkout code at selected tag
+      # 1. Checkout 指定分支
+      - name: Checkout code
         uses: actions/checkout@v6
         with:
-          # 「Use workflow from」で選択されたブランチ/タグの完全なref (例: refs/tags/v1.0.0)
-          ref: ${{ github.ref }}
+          ref: ${{ inputs.branch }}
 
-      # 2. JDK セットアップ
+      # 2. Set up JDK 17
       - name: Set up JDK 17
         uses: actions/setup-java@v5
         with:
           java-version: '17'
           distribution: 'temurin'
 
-      # 3. Gradle キャッシュの設定
+      # 3. Gradle cache
       - name: Setup Gradle Cache
         uses: gradle/actions/setup-gradle@v6
 
-      # 4. Gradle Wrapper を実行可能にする (Windows では不要なので、if 条件により実行されない)
-      - name: Grant execute permission for gradlew
-        if: runner.os != 'Windows'
-        run: chmod +x gradlew
-
-      # 5. Gradle で createDistributable を実行
-      #    Windows環境に合わせて gradlew.bat を使用
-      #    タグ名を環境変数 APP_VERSION として渡す (github.ref_name を使用)
+      # 4. Build EXE
       - name: Build with Gradle (createDistributable)
-        env:
-          # github.ref_name には選択されたタグ名 (例: v1.0.0) が入る
-          APP_VERSION: ${{ github.ref_name }}
-        # Windows では gradlew.bat を実行
         run: ./gradlew.bat :compose:createDistributable
 
-      # 6. readme.txt をビルド成果物ディレクトリにコピーする
+      # 5. Copy readme
       - name: Copy readme.txt to distribution directory
         run: |
-          # PowerShell の Copy-Item コマンドを使用
           Copy-Item -Path compose/readme.txt -Destination compose/build/compose/binaries/main/app/umasim/
 
-      # 7. 成果物ディレクトリをzip圧縮する
+      # 6. Zip
       - name: Zip application directory
         run: |
-          # PowerShell の Compress-Archive コマンドを使用
           Compress-Archive -Path compose/build/compose/binaries/main/app/umasim -DestinationPath umasim.zip
 
-      # 8. ドラフトリリースを作成し、成果物 (zipファイル) をアップロード
-      #    tag_name と name に github.ref_name を使用
-      - name: Create Draft Release and Upload Assets
+      # 7. Create Release
+      - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          # 選択されたタグ名をそのまま使用
-          tag_name: ${{ github.ref_name }}
-          # リリース名 (タグ名から生成する例)
-          name: Release ${{ github.ref_name }}
-          body: "アップデートを行う場合、新しいリリースファイルを解凍した後、古いバージョンから、settings.confをコピーしてください。"
-          draft: true
+          tag_name: build-${{ github.run_number }}
+          name: Build ${{ github.run_number }}
+          body: "自动构建版本（分支：${{ inputs.branch }}）"
+          draft: false
           prerelease: false
-          # 添付ファイルとして、圧縮した zip ファイルを指定
           files: |
             umasim.zip
         env:
